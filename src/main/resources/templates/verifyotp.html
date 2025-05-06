@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+<title>Forgot Page</title>
+</head>
+<body>
+	<section>
+		<h1>Verify Page</h1>
+
+		<h1>Enter OTP Here</h1>
+
+		<form  th:action="@{/verifyotp}" method ="post"  >
+			<div class="form-group">
+
+				<input name="otp" type="text" class="form-control"
+					required="required" placeholder="Enter OTP" />
+			</div>
+			<div class="container text-center ">
+
+				<button class="btn btn-success btn-sm" text="submit">verify</button>
+
+			</div>
+		</form>
+	</section>
+</body>
+</html>

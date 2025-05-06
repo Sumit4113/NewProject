@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="/user/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+<title>AddContact</title>
+</head>
+<body>
+
+	<section class="contact_form">
+
+
+		<form action="#" th:object="${contact}" enctype="multipart/form-data"
+			method="post" th:action="@{/user/add_contact}">
+			<div class="form-container">
+				<!-- Display success or error message -->
+				<div th:if="${session.message}"
+					th:class="'alert alert-' + ${session.message.type}" role="alert"
+					style="text-align: center; margin: 20px auto; width: 60%; font-weight: bold; font-size: 1.1rem;">
+					<span th:text="${session.message.content}"></span>
+				</div>
+				<h2>Contact Save Form</h2>
+
+
+				<div class="form-group">
+					<i class="fa-solid fa-plus"></i> <label for="username">User
+						name:</label> <input type="text" id="username" name="username" required>
+				</div>
+				<div class="form-group">
+					<i class="fa-solid fa-user"></i> <label for="lastname">Last
+						Name:</label> <input type="text" id="lastname" name="lastName" required>
+				</div>
+				<div class="form-group">
+					<i class="fa-solid fa-envelope"></i> <label for="email">Email:</label>
+					<input type="email" id="email" name="email" required>
+				</div>
+				<div class="form-group">
+					<i class="fa-solid fa-phone"></i> <label for="phonenumber">Phone
+						Number:</label> <input type="tel" id="number" name="phone" required>
+				</div>
+				<div class="form-group">
+					<i class="fa-solid fa-image"></i> <label for="image">Upload
+						Image:</label> <input type="file" id="image" name="profileimage">
+				</div>
+
+				<input type="submit" value="Save Contact">
+
+			</div>
+		</form>
+	</section>
+</body>
+</html>

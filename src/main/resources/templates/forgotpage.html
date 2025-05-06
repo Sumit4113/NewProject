@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<title>Forgot Page</title>
+</head>
+<body>
+	<section>
+		<h1>Forgot Page</h1>
+
+		<h1>Enter your email here</h1>
+
+		<form  th:action="@{/sendotps}" method ="post"  >
+			<div class="form-group">
+
+				<input name="email" type="text" class="form-control"
+					required="required" placeholder="Enter your email" />
+			</div>
+			<div class="container text-center ">
+
+				<button class="btn btn-success btn-sm" text="submit">Send OTP</button>
+
+			</div>
+		</form>
+	</section>
+</body>
+</html>

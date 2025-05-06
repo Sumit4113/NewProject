@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<style>
+/* RESET & BASE */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: auto;
+	overflow-x: hidden;
+	scroll-behavior: smooth;
+}
+
+main {
+	min-height: 100vh;
+}
+
+/* NAVBAR */
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 70px;
+	background: rgba(255, 255, 255, 0.95);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 40px;
+	z-index: 1000;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.logo span {
+	color: #6C63FF;
+}
+
+.nav-links {
+	list-style: none;
+	display: flex;
+	gap: 30px;
+}
+
+.nav-links a {
+	text-decoration: none;
+	color: #333;
+	font-weight: 600;
+	transition: color 0.3s;
+}
+
+.nav-links a:hover {
+	color: #6C63FF;
+}
+
+/* SLIDER CONTAINER */
+.slider-container {
+	display: flex;
+	width: 300vw;
+	height: 100vh;
+	transition: transform 0.6s ease-in-out;
+}
+
+section {
+	width: 100vw;
+	height: 100vh;
+	padding-top: 70px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	position: relative;
+}
+
+.home-panel {
+	background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.login-panel {
+	background: linear-gradient(135deg, #43cea2, #185a9d);
+}
+
+.register-panel {
+		background: linear-gradient(135deg, #43cea2, #185a9d);
+}
+
+h1, h2 {
+	font-size: 46px;
+	margin-bottom: 20px;
+}
+
+p {
+	font-size: 19px;
+	max-width: 600px;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.form-box {
+	background: rgba(255, 255, 255, 0.95);
+	padding: 30px;
+	border-radius: 12px;
+	width: 320px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+	color: #333;
+}
+
+.form-box input, .form-box button {
+	width: 100%;
+	padding: 12px;
+	margin: 10px 0;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 16px;
+}
+
+.form-box button {
+	background-color: #6C63FF;
+	color: white;
+	border: none;
+	cursor: pointer;
+	transition: background 0.3s ease;
+}
+
+.form-box button:hover {
+	background-color: #5a52d1;
+}
+
+/* SLIDE BEHAVIOR */
+#home:target ~ .slider-container {
+	transform: translateX(0vw);
+}
+
+#login:target ~ .slider-container {
+	transform: translateX(-100vw);
+}
+
+#register:target ~ .slider-container {
+	transform: translateX(-200vw);
+}
+
+/* DEFAULT STATE */
+.slider-container {
+	transform: translateX(0vw);
+}
+
+a.cta-btn {
+	background: #fff;
+	color: #6C63FF;
+	padding: 12px 24px;
+	text-decoration: none;
+	border-radius: 8px;
+	font-weight: bold;
+	transition: background 0.3s;
+}
+
+a.cta-btn:hover {
+	background: #f0f0f0;
+}
+
+/* Here is the lower code of home page like contact and about footer */
+body {
+	margin: 0;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: linear-gradient(to bottom right, #f0f8ff, #e0eafc);
+	color: #333;
+}
+
+.section-title {
+	text-align: center;
+	font-size: 2.5rem;
+	margin: 2rem 0 1rem;
+	color: #2C2C2C;
+}
+
+.about-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 2rem;
+	flex-wrap: wrap;
+}
+
+.about-text {
+	flex: 1;
+	padding: 1rem;
+	font-size: 1.2rem;
+	animation: fadeInLeft 1s ease-in-out;
+		color: #2C2C2C;
+}
+
+.about-image {
+	flex: 1;
+	padding: 1rem;
+	text-align: center;
+	animation: fadeInRight 1s ease-in-out;
+}
+
+
+.about-image img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 20px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.contact-content {
+	display: flex;
+	justify-content: space-between;
+	padding: 2rem;
+	flex-wrap: wrap;
+}
+
+.contact-info, .contact-form {
+	flex: 1;
+	padding: 1rem;
+	color: #2C2C2C;
+}
+
+.form-group {
+	margin-bottom: 1rem;
+}
+
+label {
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+input, textarea {
+	width: 100%;
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.submit-btn {
+	padding: 0.75rem 1.5rem;
+	background-color: #4a90e2;
+	border: none;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+	background-color: #357ab8;
+}
+
+footer {
+	background-color: #2c3e50;
+	color: white;
+	text-align: center;
+	padding: 2rem 1rem;
+}
+
+.footer-content .logo {
+	font-size: 1.8rem;
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+}
+
+.footer-content .logo span {
+	color: #4a90e2;
+}
+
+.social-links a {
+	color: white;
+	margin: 0 0.5rem;
+	font-size: 1.5rem;
+	text-decoration: none;
+}
+    @keyframes fadeInLeft {
+      0% { opacity: 0; transform: translateX(-50px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeInRight {
+      0% { opacity: 0; transform: translateX(50px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+</style>
+</head>
+<body>
+
+	<!-- Anchors for Sliding -->
+	<div id="home"></div>
+	<div id="login"></div>
+	<div id="register"></div>
+
+	<!-- Navigation -->
+	<nav>
+		<div class="logo">
+			Contact<span>Manager</span>
+		</div>
+		<ul class="nav-links">
+			<li><a href="#home">Home</a></li>
+			<li><a href="#login">Login</a></li>
+			<li><a href="#register">Register</a></li>
+		</ul>
+	</nav>
+
+	<!-- Sliding Panels -->
+	<div class="slider-container">
+
+		<!-- Home Panel -->
+		<section class="home-panel">
+			<h1>Manage Your Contacts Effortlessly</h1>
+			<p>Simple, secure and intuitive platform to organize your
+				connections.</p>
+			<a href="#login" class="cta-btn">Get Started</a>
+		</section>
+
+		<!-- Login Panel -->
+		<section class="login-panel">
+			<div class="form-box">
+				<h2>Login</h2>
+				<form th:action="@{/dologin}" method="post">
+					<div th:if="${param.error}" style="color: red;">Invalid
+						credentials</div>
+					<input type="email" name="username" placeholder="Email" required />
+					<input type="password" name="password" placeholder="Password"
+						required /> <a th:href="@{/forgot}">Forgot password?</a>
+					<button type="submit">Login</button>
+				</form>
+			</div>
+		</section>
+
+		<!-- Register Panel -->
+		<section class="register-panel">
+			<div class="form-box">
+				<h2>Register</h2>
+                	<form th:action="@{/registers}" method="post" th:object="${user2}" >
+					<div th:if="${success}" style="color: green;" th:text="${success}"></div>
+					<div th:if="${error}" style="color: red;" th:text="${error}"></div>
+					<input th:field="*{name}" type="text" placeholder="Full Name"
+						required /> <input th:field="*{email}" type="email"
+						placeholder="Email" required /> <input th:field="*{password}"
+						type="password" placeholder="Password" required /> <input
+						th:field="*{imageUrl}" type="file" accept="image/*" />
+					<button type="submit" >Register</button>
+				</form>
+			</div>
+		</section>
+
+	</div>
+
+	<section id="about" class="about">
+		<h2 class="section-title">About Us</h2>
+		<div class="about-content">
+			<div class="about-text">
+				<p>Contact Manager is a powerful yet simple tool designed to
+					help you organize and manage your contacts efficiently. Whether
+					you're a business professional, freelancer, or just someone who
+					wants to keep their contacts organized, our platform provides the
+					perfect solution.</p>
+				<p>Founded in 2023, we've been dedicated to creating a
+					user-friendly experience that makes contact management a breeze.
+					Our team of passionate developers and designers work tirelessly to
+					ensure that you have the best tools at your disposal.</p>
+			</div>
+			<div class="about-image">
+				<img
+					src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+					alt="Team working together">
+			</div>
+		</div>
+
+	</section>
+
+	<section id="contact" class="contact">
+		<h2 class="section-title">Contact Us</h2>
+		<div class="contact-content">
+			<div class="contact-info">
+				<h3>Get In Touch</h3>
+				<p>Have questions or feedback? We'd love to hear from you! Fill
+					out the form or reach out to us directly using the information
+					below.</p>
+				<p>
+					<strong>Email:</strong> support@contactmanager.com
+				</p>
+				<p>
+					<strong>Phone:</strong> +1 (555) 123-4567
+				</p>
+				<p>
+					<strong>Address:</strong> 123 Contact Street, Digital City, CM
+					12345
+				</p>
+			</div>
+			<div class="contact-form">
+				<form>
+					<div class="form-group">
+						<label for="name">Name</label> <input type="text" id="name"
+							name="name" required>
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label> <input type="email" id="email"
+							name="email" required>
+					</div>
+					<div class="form-group">
+						<label for="subject">Subject</label> <input type="text"
+							id="subject" name="subject" required>
+					</div>
+					<div class="form-group">
+						<label for="message">Message</label>
+						<textarea id="message" name="message" required></textarea>
+					</div>
+					<button type="submit" class="submit-btn">Send Message</button>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<footer>
+		<div class="footer-content">
+			<div class="logo">
+				Contact<span>Manager</span>
+			</div>
+			<div class="social-links">
+				<a href="#">📘</a> <a href="#">📱</a> <a href="#">📸</a> <a href="#">📧</a>
+			</div>
+			<p>&copy; 2023 ContactManager. All rights reserved.</p>
+		</div>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="/user/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+<title>UpdateContact</title>
+</head>
+<body>
+	<section class="contact_form">
+		<form action="#" th:object="${contact}" enctype="multipart/form-data"
+			method="post" th:action="@{/user/update}">
+			<div class="form-container">
+				<div th:if="${session.message}"
+					class="alert alert-[[${session.message.type}]]" role="alert">
+					<span th:text="${session.message.content}"></span>
+				</div>
+				<h2>Update Contact</h2>
+
+				<input type="hidden" th:value="${contact.cId}" name="cId" />
+
+				<div class="form-group">
+					<i class="fa-solid fa-plus"></i> <label for="username">User
+						name:</label> <input th:value="${contact.username}" type="text"
+						id="username" name="username" required>
+				</div>
+				<div class="form-group">
+					<i class="fa-solid fa-user"></i> <label for="lastName">Last
+						Name:</label> <input th:value="${contact.lastName}" type="text"
+						id="lastName" name="lastName" required>
+				</div>
+				<div class="form-group">
+					<i class="fa-solid fa-envelope"></i> <label for="email">Email:</label>
+					<input th:value="${contact.email}" type="email" id="email"
+						name="email" required>
+				</div>
+				<div class="form-group">
+					<i class="fa-solid fa-phone"></i> <label for="phonenumber">Phone
+						Number:</label> <input th:value="${contact.phone}" type="tel"
+						id="phonenumber" name="phone" required>
+				</div>
+				<div class="form-group">
+					<i class="fa-solid fa-image"></i> <label for="image">Upload
+						Image:</label> <input type="file" id="image" name="profileimage">
+				</div>
+
+					<input type="submit" value="Save Contact">
+			</div>
+		</form>
+	</section>
+	
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" th:href="@{/css/dashboard.css}">
+<link rel="stylesheet" th:href="@{/css/contact.css}">
+
+
+<title>Contact Manager</title>
+
+
+</head>
+<body>
+<div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">D</div>
+                    <span>Dashboard</span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-item active" th:href="@{/user/index}">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a></li>
+                    <li><a href="#" class="nav-item" th:href="@{/user/addcontacts}">
+                        <span class="nav-icon">📁</span>
+                        <span>New Contacts </span>
+                    </a></li>
+                    <li><a href="#" class="nav-item" th:href="@{/user/profile}">
+                        <span class="nav-icon">👤</span>
+                        <span>Profile</span>
+                    </a></li>
+                    
+                    <li><a href="#" class="nav-item" th:href="@{/user/shows/0}">
+                        <span class="nav-icon">📁</span>
+                        <span>ShowContacts</span>
+                    </a></li>
+                    <li><a href="#" class="nav-item">
+                        <span class="nav-icon">💬</span>
+                        <span>Feedback</span>
+                    </a></li>
+                    <li><a href="#" class="nav-item">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Settings</span>
+                    </a></li>
+                  
+                    <li><a href="#" class="nav-item" th:href="@{/logout}">
+                        <span class="nav-icon">🚪</span>
+                        <span>Logout</span>
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+    
+	
+	 
+			<!-- Main Content -->
+			<div class="main-content" id="main-content">
+			 <!-- Main Content -->
+        <main class="main-content" id="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="menu-toggle" id="menu-toggle">
+                    <div class="hamburger"></div>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">J</div>
+                    <div class="user-info">
+                        <div class="user-name">John Doe</div>
+                        <div class="user-role">Admin</div>
+                    </div>
+                </div>
+                <div class="theme-toggle" id="theme-toggle">
+                    <div class="toggle-circle"></div>
+                </div>
+            </header>
+            </main>
+
+
+
+				<main class="main-content" th:replace="${content}">
+					<!-- Content loaded here -->
+				</main>
+
+			</div>
+	</div>
+	 <script>
+	 // Toggle Sidebar
+     const menuToggle = document.getElementById('menu-toggle');
+     const sidebar = document.getElementById('sidebar');
+     const mainContent = document.getElementById('main-content');
+
+     menuToggle.addEventListener('click', function() {
+         sidebar.classList.toggle('active');
+         mainContent.classList.toggle('sidebar-active');
+         menuToggle.classList.toggle('active');
+     });
+
+     // Toggle Theme
+     const themeToggle = document.getElementById('theme-toggle');
+     
+     themeToggle.addEventListener('click', function() {
+         if (document.body.getAttribute('data-theme') === 'dark') {
+             document.body.removeAttribute('data-theme');
+         } else {
+             document.body.setAttribute('data-theme', 'dark');
+         }
+     });
+
+     // Initialize sidebar as active on page load
+     window.addEventListener('DOMContentLoaded', function() {
+         sidebar.classList.add('active');
+         mainContent.classList.add('sidebar-active');
+         menuToggle.classList.add('active');
+     });
+    </script>
+</body>
+</html>

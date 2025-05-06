@@ -1,6 +1,12 @@
 # Ignore main target folder
-/target/
-*.jar
+target/
+*.log
+.idea/
+*.iml
+*.zip
+*.rar
+node_modules/
+
 
 HELP.md
 target/

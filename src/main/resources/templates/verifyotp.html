@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="base::layout(~{::section})">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Forgot Page</title>
+<title>Verify OTP</title>
+<link rel="stylesheet" th:href="@{/css/forgot.css}">
 </head>
 <body>
-	<section>
-		<h1>Verify Page</h1>
+	<div class="container">
+		<h2>🔎 Verify OTP</h2>
 
-		<h1>Enter OTP Here</h1>
+		<div th:if="${session.message}" class="alert alert-danger"
+			th:text="${session.message}"></div>
 
-		<form  th:action="@{/verifyotp}" method ="post"  >
-			<div class="form-group">
-
-				<input name="otp" type="text" class="form-control"
-					required="required" placeholder="Enter OTP" />
-			</div>
-			<div class="container text-center ">
-
-				<button class="btn btn-success btn-sm" text="submit">verify</button>
-
-			</div>
+		<form th:action="@{/verifyotp}" method="post">
+			<label>Enter OTP</label> <input type="number" name="otp"
+				placeholder="Enter OTP sent to your email" required>
+			<button type="submit">Verify</button>
 		</form>
-	</section>
+	</div>
 </body>
 </html>

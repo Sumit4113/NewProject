@@ -9,5 +9,5 @@ public class SmartContManager0Application {
 	public static void main(String[] args) {
 		SpringApplication.run(SmartContManager0Application.class, args);
 	}
-
+	
 }

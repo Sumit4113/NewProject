@@ -6,12 +6,11 @@
 <title>Show Contact</title>
 </head>
 <body>
-<style>
+	<style>
 .alert {
-    opacity: 1;
-    transition: opacity 0.8s ease;
+	opacity: 1;
+	transition: opacity 0.8s ease;
 }
-
 </style>
 
 	<section class="showcontacts">
@@ -74,19 +73,25 @@
 				</table>
 				<nav class="body-center" aria-label="Page navigation example">
 					<ul class="pagination">
-						<li th:if="${currentPage != 0}" class="page-item"><a
-							th:href="@{'/user/shows/'+${currentPage-1}}" class="page-link"
-							href="#">Previous</a></li>
+						<!-- Previous button -->
+						<li th:if="${currentPage != null and currentPage > 0}"
+							class="page-item"><a
+							th:href="@{'/user/shows/' + ${currentPage - 1}}"
+							class="page-link">Previous</a></li>
 
-						<li th:Classappend="${currentPage==i-1?'active':''}"
-							th:each="i : ${#numbers.sequence(1,totalPages)}"
-							class="page-item"><a th:href="@{'/user/shows/'+${i-1}}"
-							class="page-link" href="#"><span th:text="${i}"></span></a></li>
+						<!-- Page numbers -->
+						<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+							th:classappend="${currentPage == i - 1} ? 'active' : ''"
+							class="page-item"><a th:href="@{'/user/shows/' + ${i - 1}}"
+							class="page-link"> <span th:text="${i}"></span>
+						</a></li>
 
-
-						<li th:if="${currentPage+1 != totalPages}" class="page-item"><a
-							th:href="@{'/user/shows/'+${currentPage+1}}" class="page-link"
-							href="#">Next</a></li>
+						<!-- Next button -->
+						<li
+							th:if="${currentPage != null and currentPage + 1 < totalPages}"
+							class="page-item"><a
+							th:href="@{'/user/shows/' + ${currentPage + 1}}"
+							class="page-link">Next</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -112,7 +117,7 @@
         }
     });
 </script>
-	
+
 
 </body>
 </html>

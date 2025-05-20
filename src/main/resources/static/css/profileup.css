@@ -1,0 +1,99 @@
+/* Enhanced style for Smart Contact Manager settings page */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 750px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+h2, h3 {
+  color: #4e73df;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-weight: bold;
+  color: #374151;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+textarea {
+  padding: 12px;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #4e73df;
+  box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.2);
+  outline: none;
+}
+
+button {
+  background-color: #4e73df;
+  color: #fff;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #2e59d9;
+  transform: translateY(-1px);
+}
+
+.alert {
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.alert-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.alert-danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+img.profile-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 10px;
+  object-fit: cover;
+  border: 2px solid ;
+}

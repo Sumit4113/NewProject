@@ -9,7 +9,6 @@
 
 	<section class="contact_form">
 
-
 		<form action="#" th:object="${contact}" enctype="multipart/form-data"
 			method="post" th:action="@{/user/add_contact}">
 			<div class="form-container">
@@ -20,7 +19,6 @@
 					<span th:text="${session.message.content}"></span>
 				</div>
 				<h2>Contact Save Form</h2>
-
 
 				<div class="form-group">
 					<i class="fa-solid fa-plus"></i> <label for="username">User
@@ -42,6 +40,13 @@
 					<i class="fa-solid fa-image"></i> <label for="image">Upload
 						Image:</label> <input type="file" id="image" name="profileimage">
 				</div>
+
+				<!-- Optional: Show current uploaded image preview if editing -->
+				<!--
+				<div class="form-group">
+					<img th:if="${contact.image}" th:src="@{'/image/' + ${contact.image}}" alt="Preview" width="100px" />
+				</div>
+				-->
 
 				<input type="submit" value="Save Contact">
 

@@ -1,111 +1,130 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="/user/base::layout(~{::section})">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="/user/base::layout(~{::section})">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <script th:src="@{/js/dashboard.js}"></script>
-  <title>Contact Manager</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script th:src="@{/js/dashboard.js}"></script>
+<title>Contact Manager</title>
 </head>
 <body>
-  <section class="homepage">
+	<section class="homepage">
+		<div class="container text-center">
 
-   
-    
-      
+			<div class="card">
 
-            <!-- Dashboard Content -->
-            <div class="dashboard-grid">
-                <!-- Card 1 -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Total Users</h3>
-                        <div class="card-icon success">👥</div>
-                    </div>
-                    <div class="card-value">8,549</div>
-                    <p class="card-description">Increased by 12% this month</p>
-                    <div class="progress-container">
-                        <div class="progress-bar success" style="width: 75%"></div>
-                    </div>
-                </div>
+				<div class="card-body">
 
-                <!-- Card 2 -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Revenue</h3>
-                        <div class="card-icon info">💰</div>
-                    </div>
-                    <div class="card-value">$24,780</div>
-                    <p class="card-description">Increased by 8% this month</p>
-                    <div class="progress-container">
-                        <div class="progress-bar info" style="width: 65%"></div>
-                    </div>
-                </div>
+					<img class="myprofile" alt="profile" src=""
+						style="height: 200px; width: 200px"
+						th:src="@{'/image/'+${user.imageUrl}}">
 
-                <!-- Card 3 -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Tasks</h3>
-                        <div class="card-icon warning">✓</div>
-                    </div>
-                    <div class="card-value">64%</div>
-                    <p class="card-description">16 tasks completed out of 25</p>
-                    <div class="progress-container">
-                        <div class="progress-bar warning" style="width: 64%"></div>
-                    </div>
-                </div>
+					<table class="table mt-5">
+						<thead>
+							<tr>
+								<th scope="row">USER NAME</th>
+								<th><span th:text="${user.name}"></span></th>
+							</tr>
+							<tr>
+								<th scope="col">#USERId</th>
+								<th scope="col"><span th:text="${user.id}"></span></th>
 
-                <!-- Card 4 -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">New Orders</h3>
-                        <div class="card-icon danger">🛒</div>
-                    </div>
-                    <div class="card-value">126</div>
-                    <p class="card-description">Increased by 5% this week</p>
-                    <div class="progress-container">
-                        <div class="progress-bar danger" style="width: 45%"></div>
-                    </div>
-                </div>
-            </div>
+							</tr>
 
-           
-            <!-- Recent Activity -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Recent Activity</h3>
-                </div>
-                <ul class="activity-list">
-                    <li class="activity-item">
-                        <div class="activity-icon" style="background-color: var(--success-color);">✓</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Project X completed</div>
-                            <div class="activity-time">2 hours ago</div>
-                        </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon" style="background-color: var(--info-color);">💬</div>
-                        <div class="activity-content">
-                            <div class="activity-title">New comment on Project Y</div>
-                            <div class="activity-time">5 hours ago</div>
-                        </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon" style="background-color: var(--warning-color);">📁</div>
-                        <div class="activity-content">
-                            <div class="activity-title">New project created</div>
-                            <div class="activity-time">Yesterday</div>
-                        </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon" style="background-color: var(--danger-color);">🔔</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Server maintenance scheduled</div>
-                            <div class="activity-time">2 days ago</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </main>
-  </section>
+							<tr>
+								<th scope="row">EMAIL</th>
+								<th><span th:text="${user.email}"></span></th>
+							</tr>
+
+
+						</thead>
+					</table>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+
+
+
+		<!-- Dashboard Content -->
+		<div class="dashboard-grid">
+			<!-- Card 1 -->
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Add Contacts</h3>
+					<div class="card-icon success">👥</div>
+				</div>
+				<div class="card-value">Limit : 10</div>
+
+			</div>
+
+			<!-- Card 2 -->
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Total Contacts</h3>
+					<div class="card-icon info">📁</div>
+				</div>
+				<div class="card-value">List : here</div>
+
+			</div>
+
+			<!-- Card 3 -->
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Profile</h3>
+					<div class="card-icon warning">✓</div>
+				</div>
+				<div class="card-value">Edit Profile</div>
+			</div>
+
+
+
+
+			<!-- Recent Activity -->
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Upgrade to Premium</h3>
+				</div>
+				<ul class="activity-list">
+					<li class="activity-item">
+						<div class="activity-icon"
+							style="background-color: var(--success-color);">✓</div>
+						<div class="activity-content">
+							<div class="activity-title">Note Add</div>
+							<div class="activity-time">1 month</div>
+						</div>
+					</li>
+					<li class="activity-item">
+						<div class="activity-icon"
+							style="background-color: var(--info-color);">💬</div>
+						<div class="activity-content">
+							<div class="activity-title">Increase Contact Add Limit</div>
+							<div class="activity-time">Add 2000 contacts</div>
+						</div>
+					</li>
+					<li class="activity-item">
+						<div class="activity-icon"
+							style="background-color: var(--warning-color);">📁</div>
+						<div class="activity-content">
+							<div class="activity-title">Better Features</div>
+							<div class="activity-time">As Plane</div>
+						</div>
+					</li>
+					<li class="activity-item">
+						<div class="activity-icon"
+							style="background-color: var(--danger-color);">🔔</div>
+						<div class="activity-content">
+							<div class="activity-title">Better Note Add Experience</div>
+							<div class="activity-time">As Your Subscription</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
 </body>
 </html>

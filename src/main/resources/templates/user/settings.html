@@ -2,58 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="/user/base::layout(~{::section})">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Settings</title>
+
+
 </head>
 <body>
 
 	<section>
-
 		<div class="container">
+			<h2>⚙️ Settings</h2>
 
-			<div class="row">
-
-				<div class="col-md-12">
-
-					<div class="card-body">
-						<h3 class="my-3">Change Password</h3>
-
-						<form th:action="@{/user/changepass}" enctype="multipart/form-data" method="post" >
-
-							<!--    old password -->
-							<div class="form-group">
-
-								<input name="oldpass" type="password" class="form-control"
-									placeholder="Enter old password" />
-
-								<!-- New password field -->
-
-							</div>
-							<div class="form-group">
-
-								<input name="newpass" type="password" class="form-control"
-									placeholder="Enter old password" />
-
-							</div>
-							
-							<div class="container text-center">
-							
-							<button class="btn btn-success btn-sm" type="submit">Change</button>
-							<button class="btn btn-warning btn-sm" type="reset">Reset</button>
-							
-							</div>
-
-						</form>
-					</div>
-
-				</div>
-
+			<!-- Flash Message -->
+			<div th:if="${session.message}">
+				<p th:text="${session.message.content}"
+					th:class="'alert alert-' + ${session.message.type}"></p>
 			</div>
 
+			<!-- Change Password Section -->
+			<div>
+				<h3>🔐 Change Password</h3>
+				<form th:action="@{/user/changepass}" method="post">
+					<label for="oldpass">Old Password</label> <input type="password"
+						name="oldpass" id="oldpass" required> <label for="newpass">New
+						Password</label> <input type="password" name="newpass" id="newpass"
+						required>
 
+					<button type="submit">Change Password</button>
+					
+				</form>
+			</div>
+
+			<hr>
+
+			<!-- Update Profile Section -->
+			<div>
+				<h3>👤 Update Profile</h3>
+				<form th:action="@{/user/update-profile}" method="post"
+					enctype="multipart/form-data">
+					<label for="name">Name</label> <input type="text" name="name"
+						id="name" th:value="${user.name}" required> <label
+						for="email">Email</label> <input type="email" name="email"
+						id="email" th:value="${user.email}" readonly>
+						
+				
+
+					<button type="submit">Update Profile</button>
+				</form>
+			</div>
 		</div>
-
 	</section>
-
 </body>
 </html>

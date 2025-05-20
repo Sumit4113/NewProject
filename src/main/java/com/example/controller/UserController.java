@@ -1,18 +1,18 @@
 package com.example.controller;
 
 import java.io.File;
-import java.lang.StackWalker.Option;
-import java.nio.file.FileAlreadyExistsException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
+
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,10 +29,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.entites.Contact;
+import com.example.entites.Feedback;
 import com.example.entites.User;
 import com.example.helper.Message;
 import com.example.repository.ContactRepository;
+import com.example.repository.FeedbackRepository;
 import com.example.repository.UserRepository;
+import com.example.services.EmailService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -45,6 +48,10 @@ public class UserController {
 	private UserRepository userRepo;
 	@Autowired
 	private ContactRepository contactRepo;
+	
+
+	@Autowired
+	private EmailService emailService;
 
 	// dashboar home content connectivity
 	@ModelAttribute
@@ -84,48 +91,37 @@ public class UserController {
 
 		try {
 			String userNames = principal.getName();
-
 			User user = userRepo.findByUserName(userNames);
 
-			// process and upload image
+			// Handle file upload
 			if (file.isEmpty()) {
-				// if the file is empty than try our message
-				System.out.println("file is empty");
-				contact.setImage("contact.png");
+				contact.setImage("default.png");
 			} else {
-				// file the file to folder and update the name to contact
-				contact.setImage(file.getOriginalFilename());
+				// Save file outside the project, e.g. in "contact-photos" folder
+				String uploadDir = "contact-photos";
+				File folder = new File(uploadDir);
+				if (!folder.exists())
+					folder.mkdirs();
 
-				File saveFile = new ClassPathResource("static/image").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
-
+				String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+				Path path = Paths.get(uploadDir, fileName);
 				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
+				contact.setImage(fileName);
 			}
 
 			contact.setUser(user);
-
 			user.getContact().add(contact);
-
-			// This line save data in database
 			this.userRepo.save(user);
 
-			// message success....
-			session.setAttribute("message", new Message("Your contact is added !! Add new ", "success"));
+			session.setAttribute("message", new Message("Your contact is added !! Add new", "success"));
 
-			System.out.println("Add sucessfully");
 		} catch (Exception e) {
-
-			System.out.println(e.getMessage());
-			e.getStackTrace();
-
-			// message error....
-			session.setAttribute("message", new Message("Some thing went wrong !! Try again ", "danger"));
-
+			e.printStackTrace();
+			session.setAttribute("message", new Message("Something went wrong!! Try again", "danger"));
 		}
 
 		return "user/addcontact";
-
 	}
 
 //show contact handler
@@ -223,34 +219,28 @@ public class UserController {
 	@RequestMapping("/update")
 	public String updateHandeller(@ModelAttribute Contact contact, @RequestParam("profileimage") MultipartFile file,
 			Model m, HttpSession session, Principal principal) {
-
 		try {
-//			
-//			Contact oldContact = this.contactRepo.findById(contact.getcId()).get();
-//			// image..
-//			if (!file.isEmpty()) {
-//				// file work
-//				// rewrite
-//
-//			}
-//			else {	
-//				contact.setImage(oldContact.getImage());
-//			}
+			// Optional: handle image updating here if needed
+
 			User user = this.userRepo.findByUserName(principal.getName());
 			contact.setUser(user);
 
 			this.contactRepo.save(contact);
 
+			// Set success message (optional)
+			session.setAttribute("message", new Message("Contact updated successfully", "success"));
+
 		} catch (Exception e) {
-			// TODO: handle exception
+			session.setAttribute("message", new Message("Something went wrong!", "danger"));
+			e.printStackTrace();
 		}
 
-		return "user/showcontact";
-
+		// ✅ FIX: redirect to pagination controller so currentPage is properly set
+		return "redirect:/user/shows/0";
 	}
 
 	// opean setting handler
-	@GetMapping("/setting")
+	@GetMapping("/settingpage")
 	public String openSetting() {
 
 		return "user/settings";
@@ -279,6 +269,48 @@ public class UserController {
 		System.out.println(oldpass);
 		System.out.println(newpass);
 		return "redirect:/user/index";
+	}
+
+	@PostMapping("/update-profile")
+	public String updateUserProfile(@RequestParam("name") String name, @RequestParam("email") String email,
+
+			Principal principal, HttpSession session) {
+
+		try {
+			String username = principal.getName();
+			User user = this.userRepo.findByUserName(username);
+
+			user.setName(name);
+			user.setEmail(email);
+
+			this.userRepo.save(user);
+
+			session.setAttribute("message", new Message("Profile updated successfully", "success"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("message", new Message("Failed to update profile", "danger"));
+		}
+
+		return "redirect:/user/settingpage";
+	}
+
+	@GetMapping("/feedback")
+	public String showFeedbackForm(Model model) {
+		model.addAttribute("title", "Feedback");
+		return "user/feedback_form";
+	}
+
+	@PostMapping("/user/submit-feedback")
+	public String submitFeedback(@RequestParam("subject") String subject,
+	                             @RequestParam("email") String email,
+	                             @RequestParam("message") String message,
+	                             HttpSession session) {
+
+	    emailService.sendFeedbackEmail(subject, email, message);
+
+	    session.setAttribute("message", new Message("Thank you for your feedback!", "alert-success"));
+	    return "redirect:user/feedback_form"; // redirect to the feedback form page
 	}
 
 }

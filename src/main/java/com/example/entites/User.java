@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table
+@Table(name = "app_user")  // Avoid using 'user' as the table name in PostgreSQL
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

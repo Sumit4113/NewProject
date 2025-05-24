@@ -49,7 +49,7 @@ public class MyConfi    {
 		http.authenticationProvider(daoAuthentication());
 		http.authorizeHttpRequests(requests -> requests
 				.requestMatchers("/admin/**").hasRole("ADMIN")
-				.requestMatchers("/user/**").hasRole("USER")
+				.requestMatchers("/user/**").permitAll()
 				.requestMatchers("/**").permitAll()
 				.anyRequest().authenticated()
 				)

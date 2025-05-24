@@ -81,3 +81,38 @@ to {
 	transform: translateY(0);
 }
 }
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  body {
+    padding: 20px; /* Give some breathing room on small screens */
+    height: auto; /* Let content define height */
+    align-items: flex-start; /* Align form to top */
+  }
+
+  .container {
+    padding: 25px 20px;
+    max-width: 100%;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  input[type="email"], input[type="number"], input[type="password"] {
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .alert {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}

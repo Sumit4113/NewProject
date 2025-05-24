@@ -1,5 +1,4 @@
-/* Enhanced style for Smart Contact Manager settings page */
-
+/* Base styles (your provided code) */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f4f8;
@@ -95,5 +94,80 @@ img.profile-preview {
   border-radius: 50%;
   margin-top: 10px;
   object-fit: cover;
-  border: 2px solid ;
+  border: 2px solid transparent;
+}
+
+/* ===== Responsive Design ===== */
+
+/* Medium devices (tablets, max-width: 991px) */
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%;
+    padding: 25px;
+    margin: 30px auto;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="file"],
+  textarea,
+  button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  img.profile-preview {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Small devices (phones, max-width: 575px) */
+@media (max-width: 575px) {
+  .container {
+    max-width: 95%;
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  h2, h3 {
+    font-size: 1.5rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="file"],
+  textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  img.profile-preview {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Optional: keyframe animations (if not already defined) */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

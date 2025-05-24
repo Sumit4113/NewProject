@@ -4,127 +4,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script th:src="@{/js/dashboard.js}"></script>
-<title>Contact Manager</title>
+<title>Smart Contact Manager - Dashboard</title>
+<link rel="stylesheet" th:href="@{/css/dashboard.css}">
+
 </head>
 <body>
-	<section class="homepage">
-		<div class="container text-center">
+	<section>
 
-			<div class="card">
-
-				<div class="card-body">
-
-					<img class="myprofile" alt="profile" src=""
-						style="height: 200px; width: 200px"
-						th:src="@{'/image/'+${user.imageUrl}}">
-
-					<table class="table mt-5">
-						<thead>
-							<tr>
-								<th scope="row">USER NAME</th>
-								<th><span th:text="${user.name}"></span></th>
-							</tr>
-							<tr>
-								<th scope="col">#USERId</th>
-								<th scope="col"><span th:text="${user.id}"></span></th>
-
-							</tr>
-
-							<tr>
-								<th scope="row">EMAIL</th>
-								<th><span th:text="${user.email}"></span></th>
-							</tr>
-
-
-						</thead>
-					</table>
-
-				</div>
-
+		<!-- User Profile Section -->
+		<section class="user-profile">
+			<div class="profile-avatar">JD</div>
+			<div class="profile-info">
+				<h1>John Doe</h1>
+				<p>john.doe@email.com</p>
+				<p>📱 +1 (555) 123-4567</p>
 			</div>
-
-
-		</div>
-
-
-
-
-		<!-- Dashboard Content -->
-		<div class="dashboard-grid">
-			<!-- Card 1 -->
-			<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">Add Contacts</h3>
-					<div class="card-icon success">👥</div>
+			<div class="profile-stats">
+				<div class="stat-item">
+					<div class="stat-number">247</div>
+					<div class="stat-label">Total Contacts</div>
 				</div>
-				<div class="card-value">Limit : 10</div>
-
+				<div class="stat-item">
+					<div class="stat-number">23</div>
+					<div class="stat-label">Favorites</div>
+				</div>
+				<div class="stat-item">
+					<div class="stat-number">12</div>
+					<div class="stat-label">Groups</div>
+				</div>
 			</div>
+		</section>
 
-			<!-- Card 2 -->
-			<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">Total Contacts</h3>
-					<div class="card-icon info">📁</div>
-				</div>
-				<div class="card-value">List : here</div>
-
+		<!-- Action Section -->
+		<section class="action-section">
+			<button class="add-contact-btn" onclick="addContact()">
+				<span class="icon-plus"></span> Add New Contact
+			</button>
+			<div class="quick-actions">
+				<button class="quick-action-btn">
+					<div class="icon-import"></div>
+					<div>Import Contacts</div>
+				</button>
+				<button class="quick-action-btn">
+					<div class="icon-export"></div>
+					<div>Export Contacts</div>
+				</button>
+				<button class="quick-action-btn">
+					<div class="icon-group"></div>
+					<div>Create Group</div>
+				</button>
+				<button class="quick-action-btn">
+					<div class="icon-search"></div>
+					<div>Advanced Search</div>
+				</button>
 			</div>
+		</section>
 
-			<!-- Card 3 -->
-			<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">Profile</h3>
-					<div class="card-icon warning">✓</div>
-				</div>
-				<div class="card-value">Edit Profile</div>
+		<!-- Contacts Section -->
+		<section class="contacts-section">
+			<div class="section-header">
+				<h2 class="section-title">Recent Contacts</h2>
+				<input type="text" class="search-box"
+					placeholder="Search contacts...">
 			</div>
-
-
-
-
-			<!-- Recent Activity -->
-			<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">Upgrade to Premium</h3>
-				</div>
-				<ul class="activity-list">
-					<li class="activity-item">
-						<div class="activity-icon"
-							style="background-color: var(--success-color);">✓</div>
-						<div class="activity-content">
-							<div class="activity-title">Note Add</div>
-							<div class="activity-time">1 month</div>
+			<div class="contacts-grid" id="contactsGrid">
+				<!-- Sample Contacts -->
+				<div class="contact-card">
+					<div class="contact-header">
+						<div class="contact-avatar">AS</div>
+						<div class="contact-info">
+							<h3>Alice Smith</h3>
+							<p>alice.smith@email.com</p>
+							<p>+1 (555) 987-6543</p>
 						</div>
-					</li>
-					<li class="activity-item">
-						<div class="activity-icon"
-							style="background-color: var(--info-color);">💬</div>
-						<div class="activity-content">
-							<div class="activity-title">Increase Contact Add Limit</div>
-							<div class="activity-time">Add 2000 contacts</div>
+					</div>
+					<div class="contact-actions">
+						<button class="contact-btn call-btn">
+							<span class="icon-phone"></span> Call
+						</button>
+						<button class="contact-btn message-btn">
+							<span class="icon-message"></span> Message
+						</button>
+						<button class="contact-btn edit-btn">
+							<span class="icon-edit"></span> Edit
+						</button>
+					</div>
+				</div>
+
+				<div class="contact-card">
+					<div class="contact-header">
+						<div class="contact-avatar">BJ</div>
+						<div class="contact-info">
+							<h3>Bob Johnson</h3>
+							<p>bob.johnson@email.com</p>
+							<p>+1 (555) 456-7890</p>
 						</div>
-					</li>
-					<li class="activity-item">
-						<div class="activity-icon"
-							style="background-color: var(--warning-color);">📁</div>
-						<div class="activity-content">
-							<div class="activity-title">Better Features</div>
-							<div class="activity-time">As Plane</div>
+					</div>
+					<div class="contact-actions">
+						<button class="contact-btn call-btn">
+							<span class="icon-phone"></span> Call
+						</button>
+						<button class="contact-btn message-btn">
+							<span class="icon-message"></span> Message
+						</button>
+						<button class="contact-btn edit-btn">
+							<span class="icon-edit"></span> Edit
+						</button>
+					</div>
+				</div>
+
+				<div class="contact-card">
+					<div class="contact-header">
+						<div class="contact-avatar">CD</div>
+						<div class="contact-info">
+							<h3>Carol Davis</h3>
+							<p>carol.davis@email.com</p>
+							<p>+1 (555) 321-0987</p>
 						</div>
-					</li>
-					<li class="activity-item">
-						<div class="activity-icon"
-							style="background-color: var(--danger-color);">🔔</div>
-						<div class="activity-content">
-							<div class="activity-title">Better Note Add Experience</div>
-							<div class="activity-time">As Your Subscription</div>
+					</div>
+					<div class="contact-actions">
+						<button class="contact-btn call-btn">
+							<span class="icon-phone"></span> Call
+						</button>
+						<button class="contact-btn message-btn">
+							<span class="icon-message"></span> Message
+						</button>
+						<button class="contact-btn edit-btn">
+							<span class="icon-edit"></span> Edit
+						</button>
+					</div>
+				</div>
+
+				<div class="contact-card">
+					<div class="contact-header">
+						<div class="contact-avatar">DW</div>
+						<div class="contact-info">
+							<h3>David Wilson</h3>
+							<p>david.wilson@email.com</p>
+							<p>+1 (555) 654-3210</p>
 						</div>
-					</li>
-				</ul>
+					</div>
+					<div class="contact-actions">
+						<button class="contact-btn call-btn">
+							<span class="icon-phone"></span> Call
+						</button>
+						<button class="contact-btn message-btn">
+							<span class="icon-message"></span> Message
+						</button>
+						<button class="contact-btn edit-btn">
+							<span class="icon-edit"></span> Edit
+						</button>
+					</div>
+				</div>
 			</div>
-		</div>
+		</section>
 	</section>
+
+	<script>
+        // Sidebar Toggle Functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        // Add Contact Function
+        function addContact() {
+            alert('Add Contact functionality would open a form here!');
+        }
+
+        // Search Functionality
+        const searchBox = document.querySelector('.search-box');
+        const contactCards = document.querySelectorAll('.contact-card');
+
+        searchBox.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            contactCards.forEach(card => {
+                const contactName = card.querySelector('h3').textContent.toLowerCase();
+                const contactEmail = card.querySelector('p').textContent.toLowerCase();
+                
+                if (contactName.includes(searchTerm) || contactEmail.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Contact Action Handlers
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('call-btn')) {
+                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
+                alert(`Calling ${contactName}...`);
+            }
+            
+            if (e.target.classList.contains('message-btn')) {
+                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
+                alert(`Opening message for ${contactName}...`);
+            }
+            
+            if (e.target.classList.contains('edit-btn')) {
+                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
+                alert(`Editing ${contactName}...`);
+            }
+        });
+
+        // Close sidebar on window resize if mobile
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>

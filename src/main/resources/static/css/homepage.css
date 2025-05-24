@@ -11,6 +11,9 @@ html, body {
 	height: auto;
 	overflow-x: hidden;
 	scroll-behavior: smooth;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: linear-gradient(to bottom right, #f0f8ff, #e0eafc);
+	color: #333;
 }
 
 main {
@@ -59,12 +62,21 @@ nav {
 	color: #6C63FF;
 }
 
+/* Hamburger Toggle for Mobile */
+.menu-toggle {
+	display: none;
+	font-size: 28px;
+	cursor: pointer;
+	color: #333;
+}
+
 /* SLIDER CONTAINER */
 .slider-container {
 	display: flex;
 	width: 300vw;
 	height: 100vh;
 	transition: transform 0.6s ease-in-out;
+	transform: translateX(0vw); /* Default state */
 }
 
 section {
@@ -88,7 +100,7 @@ section {
 }
 
 .register-panel {
-		background: linear-gradient(135deg, #43cea2, #185a9d);
+	background: linear-gradient(135deg, #43cea2, #185a9d);
 }
 
 h1, h2 {
@@ -103,6 +115,7 @@ p {
 	margin-bottom: 30px;
 }
 
+/* FORM */
 .form-box {
 	background: rgba(255, 255, 255, 0.95);
 	padding: 30px;
@@ -146,11 +159,7 @@ p {
 	transform: translateX(-200vw);
 }
 
-/* DEFAULT STATE */
-.slider-container {
-	transform: translateX(0vw);
-}
-
+/* CTA BUTTON */
 a.cta-btn {
 	background: #fff;
 	color: #6C63FF;
@@ -165,14 +174,7 @@ a.cta-btn:hover {
 	background: #f0f0f0;
 }
 
-/* Here is the lower code of home page like contact and about footer */
-body {
-	margin: 0;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background: linear-gradient(to bottom right, #f0f8ff, #e0eafc);
-	color: #333;
-}
-
+/* ABOUT & CONTACT SECTION */
 .section-title {
 	text-align: center;
 	font-size: 2.5rem;
@@ -193,7 +195,7 @@ body {
 	padding: 1rem;
 	font-size: 1.2rem;
 	animation: fadeInLeft 1s ease-in-out;
-		color: #2C2C2C;
+	color: #2C2C2C;
 }
 
 .about-image {
@@ -202,7 +204,6 @@ body {
 	text-align: center;
 	animation: fadeInRight 1s ease-in-out;
 }
-
 
 .about-image img {
 	max-width: 100%;
@@ -254,6 +255,7 @@ input, textarea {
 	background-color: #357ab8;
 }
 
+/* FOOTER */
 footer {
 	background-color: #2c3e50;
 	color: white;
@@ -277,12 +279,109 @@ footer {
 	font-size: 1.5rem;
 	text-decoration: none;
 }
-    @keyframes fadeInLeft {
-      0% { opacity: 0; transform: translateX(-50px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
+/* ANIMATIONS */
+@keyframes fadeInLeft {
+	0% { opacity: 0; transform: translateX(-50px); }
+	100% { opacity: 1; transform: translateX(0); }
+}
 
-    @keyframes fadeInRight {
-      0% { opacity: 0; transform: translateX(50px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
+@keyframes fadeInRight {
+	0% { opacity: 0; transform: translateX(50px); }
+	100% { opacity: 1; transform: translateX(0); }
+}
+
+/* RESPONSIVE */
+@media ( max-width : 768px) {
+	.menu-toggle {
+		display: block;
+	}
+	.nav-links {
+		position: fixed;
+		top: 70px;
+		left: -100%;
+		width: 100%;
+		background-color: white;
+		flex-direction: column;
+		align-items: center;
+		transition: left 0.3s ease;
+		padding: 20px 0;
+		z-index: 999;
+	}
+	.nav-links.active {
+		left: 0;
+	}
+	.nav-links li {
+		margin: 15px 0;
+	}
+}
+
+@media ( max-width : 700px) {
+@media (max-width: 700px) {
+	nav {
+		flex-direction: row;
+		height: auto;
+		padding: 10px 20px;
+	}
+
+	.logo {
+		font-size: 20px;
+	}
+
+	section {
+		width: 100vw;
+		height: auto;
+		padding: 100px 20px 60px;
+	}
+
+	.home-panel,
+	.login-panel,
+	.register-panel {
+		width: 100vw;
+		height: auto;
+	}
+
+	h1, h2 {
+		font-size: 32px;
+	}
+
+	p {
+		font-size: 16px;
+		max-width: 100%;
+	}
+
+	.form-box {
+		width: 100%;
+		max-width: 300px;
+	}
+
+	.about-content,
+	.contact-content {
+		flex-direction: column;
+		padding: 1rem;
+	}
+
+	.about-text,
+	.about-image,
+	.contact-info,
+	.contact-form {
+		padding: 0.5rem;
+	}
+
+	.section-title {
+		font-size: 2rem;
+	}
+
+	footer {
+		padding: 1rem;
+	}
+
+	.footer-content .logo {
+		font-size: 1.5rem;
+	}
+
+	.social-links a {
+		font-size: 1.2rem;
+		margin: 0 0.3rem;
+	}
+}
+}

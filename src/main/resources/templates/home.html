@@ -11,20 +11,22 @@
 	<div id="home"></div>
 	<div id="login"></div>
 	<div id="register"></div>
-	
+
 
 	<!-- Navigation -->
 	<nav>
 		<div class="logo">
 			Contact<span>Manager</span>
 		</div>
+		<div class="menu-toggle" onclick="toggleMenu()">☰</div>
 		<ul class="nav-links">
-			<li><a href="#home">Home</a></li>
-			<li><a href="#about">About</a></li>
-			<li><a href="#login">Login</a></li>
-			<li><a href="#register">Register</a></li>
+			<li><a href="#home" onclick="closeMenu()">Home</a></li>
+			<li><a href="#about" onclick="closeMenu()">About</a></li>
+			<li><a href="#login" onclick="closeMenu()">Login</a></li>
+			<li><a href="#register" onclick="closeMenu()">Register</a></li>
 		</ul>
 	</nav>
+
 
 	<!-- Sliding Panels -->
 	<div class="slider-container">
@@ -39,7 +41,7 @@
 
 		<!-- Login Panel -->
 		<section class="login-panel">
-		
+
 			<div class="form-box">
 				<h2>Login</h2>
 				<form th:action="@{/dologin}" method="post">
@@ -155,6 +157,17 @@
 			<p>&copy; 2023 ContactManager. All rights reserved.</p>
 		</div>
 	</footer>
+
+
+	<script>
+		function toggleMenu() {
+			document.querySelector('.nav-links').classList.toggle('active');
+		}
+
+		function closeMenu() {
+			document.querySelector('.nav-links').classList.remove('active');
+		}
+	</script>
 
 </body>
 </html>

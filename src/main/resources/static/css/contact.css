@@ -12,6 +12,8 @@ body {
     justify-content: center;
     align-items: center;
     padding: 40px 0;
+    margin: 150px;
+    
 }
 .alert {
     padding: 15px;

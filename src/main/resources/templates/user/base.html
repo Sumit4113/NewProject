@@ -13,77 +13,57 @@
 
 </head>
 <body>
-	<div class="dashboard">
-		<!-- Sidebar -->
-		<aside class="sidebar" id="sidebar">
-			<div class="sidebar-header">
-				<div class="logo">
-					<div class="logo-icon">D</div>
-					<span>Dashboard</span>
+	<!-- Sidebar -->
+	<div class="sidebar" id="sidebar">
+		<div class="sidebar-header">
+			<h2>Smart Contacts</h2>
+			<p>Manage your connections</p>
+		</div>
+		<nav class="sidebar-menu">
+			<ul>
+				<li><a th:href="@{/user/index}" href="#" class="active"><span
+						class="icon-menu"></span> Dashboard</a></li>
+				<li><a th:href="@{/user/shows/0}" href="#"><span
+						class="icon-group"></span> All Contacts</a></li>
+				<li><a th:href="@{/user/addcontacts}" href="#"><span
+						class="icon-import"></span> New Contacts </a></li>
+				<li><a th:href="@{/user/feedback}" href="#"><span
+						class="icon-export"></span> Feedback</a></li>
+				<li><a th:href="@{/user/settingpage}" href="#"><span
+						class="icon-export"></span> Setting</a></li>
+				<li><a th:href="@{/user/profile}" href="#"><span
+						class="icon-star"></span> Profile</a></li>
+				<li><a th:href="@{/logout}" href="#"><span
+						class="icon-export"></span> Logout</a></li>
+
+			</ul>
+		</nav>
+	</div>
+
+	<!-- Overlay -->
+	<div class="overlay" id="overlay"></div>
+
+	<!-- Main Content -->
+	<div class="main-content">
+		<!-- Header -->
+		<header class="header">
+			<button class="menu-toggle" id="menuToggle">
+				<span class="icon-menu"></span>
+			</button>
+			<div class="header-right">
+				<button class="notification-btn">
+					<span class="icon-bell"></span>
+				</button>
+				<div class="user-name">
+					Well Come : <span th:text="${user.name}"></span>
 				</div>
 			</div>
-			<nav>
-				<ul class="nav-links">
-					<li><a href="#" class="nav-item " th:href="@{/user/index}">
-							<span class="nav-icon">📊</span> <span>Dashboard</span>
-					</a></li>
-					<li><a href="#" class="nav-item"
-						th:href="@{/user/addcontacts}"> <span class="nav-icon">📁</span>
-							<span>New Contacts </span>
-					</a></li>
-					<li><a href="#" class="nav-item" th:href="@{/user/profile}">
-							<span class="nav-icon">👤</span> <span>Profile</span>
-					</a></li>
-
-					<li><a href="#" class="nav-item" th:href="@{/user/shows/0}">
-							<span class="nav-icon">📁</span> <span>ShowContacts</span>
-					</a></li>
-					<li><a href="#" class="nav-item" th:href="@{/user/feedback}">
-							<span class="nav-icon">📊</span> <span>Feedback</span>
-					</a></li>
-
-					<li><a href="#" class="nav-item"
-						th:href="@{/user/settingpage}"> <span class="nav-icon">⚙️</span>
-							<span>Settings</span>
-					</a></li>
-
-
-					<li><a href="#" class="nav-item" th:href="@{/logout}"> <span
-							class="nav-icon">🚪</span> <span>Logout</span>
-					</a></li>
-				</ul>
-			</nav>
-		</aside>
+		</header>
 
 
 
 		<!-- Main Content -->
 		<div class="main-content" id="main-content">
-			<!-- Main Content -->
-			<main class="main-content" id="main-content">
-				<!-- Header -->
-				<header class="header">
-					<div class="menu-toggle" id="menu-toggle">
-						<div class="hamburger"></div>
-					</div>
-					<div class="user-profile">
-						<div class="avatar">
-							<span th:text="${user.name}"></span>
-						</div>
-						<div class="user-info">
-							<div class="user-name">
-								Well Come : <span th:text="${user.name}"></span>
-							</div>
-
-						</div>
-					</div>
-					<div class="theme-toggle" id="theme-toggle">
-						<div class="toggle-circle"></div>
-					</div>
-				</header>
-			</main>
-
-
 
 			<main class="main-content" th:replace="${content}">
 				<!-- Content loaded here -->
@@ -92,34 +72,68 @@
 		</div>
 	</div>
 	<script>
-		// Toggle Sidebar
-		const menuToggle = document.getElementById('menu-toggle');
-		const sidebar = document.getElementById('sidebar');
-		const mainContent = document.getElementById('main-content');
+        // Sidebar Toggle Functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
 
-		menuToggle.addEventListener('click', function() {
-			sidebar.classList.toggle('active');
-			mainContent.classList.toggle('sidebar-active');
-			menuToggle.classList.toggle('active');
-		});
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
 
-		// Toggle Theme
-		const themeToggle = document.getElementById('theme-toggle');
+        menuToggle.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
 
-		themeToggle.addEventListener('click', function() {
-			if (document.body.getAttribute('data-theme') === 'dark') {
-				document.body.removeAttribute('data-theme');
-			} else {
-				document.body.setAttribute('data-theme', 'dark');
-			}
-		});
+        // Add Contact Function
+        function addContact() {
+            alert('Add Contact functionality would open a form here!');
+        }
 
-		// Initialize sidebar as active on page load
-		window.addEventListener('DOMContentLoaded', function() {
-			sidebar.classList.add('active');
-			mainContent.classList.add('sidebar-active');
-			menuToggle.classList.add('active');
-		});
-	</script>
+        // Search Functionality
+        const searchBox = document.querySelector('.search-box');
+        const contactCards = document.querySelectorAll('.contact-card');
+
+        searchBox.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            contactCards.forEach(card => {
+                const contactName = card.querySelector('h3').textContent.toLowerCase();
+                const contactEmail = card.querySelector('p').textContent.toLowerCase();
+                
+                if (contactName.includes(searchTerm) || contactEmail.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Contact Action Handlers
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('call-btn')) {
+                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
+                alert(`Calling ${contactName}...`);
+            }
+            
+            if (e.target.classList.contains('message-btn')) {
+                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
+                alert(`Opening message for ${contactName}...`);
+            }
+            
+            if (e.target.classList.contains('edit-btn')) {
+                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
+                alert(`Editing ${contactName}...`);
+            }
+        });
+
+        // Close sidebar on window resize if mobile
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>

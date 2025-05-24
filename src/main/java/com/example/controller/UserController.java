@@ -70,9 +70,18 @@ public class UserController {
 
 	// Its a UserDashboard page
 	@RequestMapping("/index")
-	public String userPage(Model model) {
+	public String userPage(Model model, Principal principal) {
+		
+		 String username = principal.getName();
+		    User user = userRepo.findByUserName(username);
+		    model.addAttribute("user", user);
+		    
+		    // Add total contacts
+		    int totalContacts = user.getContact().size(); // assuming User has getContacts()
+		    model.addAttribute("totalContacts", totalContacts);
+		    model.addAttribute("contacts", user.getContact());
 
-		return "user/user_dashboard";
+		return "user/userdashboard";
 	}
 
 //Its user for open addcontact page

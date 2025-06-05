@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title th:text="${title}">Register</title>
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
+	rel="stylesheet" />
+
+<style>
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Poppins', sans-serif;
+}
+
+body {
+	background: linear-gradient( 180deg, silver, #fff);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+
+.register-container {
+	background: #fff;
+	padding: 2rem;
+	border-radius: 8px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 450px;
+}
+
+.register-container h2 {
+	text-align: center;
+	margin-bottom: 1.5rem;
+	color: #333;
+}
+
+.form-group {
+	margin-bottom: 1.2rem;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	color: #444;
+	font-weight: 500;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 0.75rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 1rem;
+	outline: none;
+	transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+	border-color: #5e9cff;
+	box-shadow: 0 0 6px rgba(94, 156, 255, 0.4);
+	background-color: #f0f8ff;
+}
+
+.register-button {
+	width: 100%;
+	padding: 0.8rem;
+	background: #5e9cff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background 0.3s ease;
+}
+
+.register-button:hover {
+	background: #111;
+}
+
+.extra-links {
+	margin-top: 1rem;
+	text-align: center;
+	font-size: 0.9rem;
+}
+
+.extra-links a {
+	color: #333;
+	text-decoration: underline;
+}
+
+.alert {
+	margin-bottom: 1rem;
+	padding: 0.8rem;
+	border-radius: 4px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.alert-success {
+	background-color: #c6f6d5;
+	color: #22543d;
+	border: 1px solid #38a169;
+}
+
+.alert-error {
+	background-color: #fed7d7;
+	color: #822727;
+	border: 1px solid #e53e3e;
+}
+
+@media ( max-width : 480px) {
+	.register-container {
+		padding: 1.5rem;
+	}
+	.register-container h2 {
+		font-size: 1.5rem;
+	}
+}
+</style>
+</head>
+<body>
+
+	<div class="register-container">
+		<h2>Create Your Account</h2>
+
+		<!-- Alerts -->
+		<div th:if="${success}" class="alert alert-success"
+			th:text="${success}"></div>
+		<div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+		<form th:action="@{/registers}" th:object="${User2}" method="post"
+			enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="fullname">Full Name</label> <input type="text"
+					th:field="*{name}" id="fullname" required />
+			</div>
+
+			<div class="form-group">
+				<label for="email">Email Address</label> <input type="email"
+					th:field="*{email}" id="email" required />
+			</div>
+
+			<div class="form-group">
+				<label for="password">Password</label> <input type="password"
+					th:field="*{password}" id="password" required />
+			</div>
+
+			<div class="form-group">
+				<label for="image">Upload Profile Image</label> <input type="file"
+					name="profileImage" id="image" accept="image/*" />
+			</div>
+
+			<button type="submit" class="register-button">Register</button>
+		</form>
+
+		<div class="extra-links">
+			<p>
+				Already have an account? <a th:href="@{/loginPage}">Login</a>
+			</p>
+		</div>
+	</div>
+
+</body>
+</html>

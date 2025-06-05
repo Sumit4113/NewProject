@@ -3,36 +3,44 @@ package com.example.entites;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "app_user")  // Avoid using 'user' as the table name in PostgreSQL
+@Table(name = "app_user") // Avoid using 'user' as table name in PostgreSQL
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
 	@NotBlank(message = "Name field is required !!")
 	private String name;
+
 	@Column(unique = true)
 	private String email;
+
 	private String password;
 	private String role;
 	private boolean enabled;
-	
-	private String imageUrl;
 
-	@OneToMany(cascade = CascadeType.ALL,  mappedBy = "user",orphanRemoval = true)
-	private List<Contact> contact = new ArrayList<Contact>();
+	@Lob
+	@Column(length = 16777215)
+	private byte[] image;
 
+	@Column(name = "contact_limit")
+	private int contactLimit;
+
+	@Column(name = "note_limit")
+	private int noteLimit;
+
+	@Column(name = "is_premium")
+	private boolean premium;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	private List<Contact> contact = new ArrayList<>();
+
+	// Getters and setters...
 	public List<Contact> getContact() {
 		return contact;
 	}
@@ -40,113 +48,90 @@ public class User {
 	public void setContact(List<Contact> contact) {
 		this.contact = contact;
 	}
-     
-	
-	
-	
-	
-	/**
-	 * @return the id
-	 */
+
 	public int getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return the username
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param username the username to set
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return the email
-	 */
 	public String getEmail() {
 		return email;
 	}
 
-	/**
-	 * @param email the email to set
-	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	/**
-	 * @return the password
-	 */
 	public String getPassword() {
 		return password;
 	}
 
-	/**
-	 * @param password the password to set
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 * @return the role
-	 */
 	public String getRole() {
 		return role;
 	}
 
-	/**
-	 * @param role the role to set
-	 */
 	public void setRole(String role) {
 		this.role = role;
 	}
 
-	/**
-	 * @return the enabled
-	 */
 	public boolean isEnabled() {
 		return enabled;
 	}
 
-	/**
-	 * @param enabled the enabled to set
-	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	/**
-	 * @return the imageUrl
-	 */
-	public String getImageUrl() {
-		return imageUrl;
+	public byte[] getImage() {
+		return image;
 	}
 
-	/**
-	 * @param imageUrl the imageUrl to set
-	 */
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public int getContactLimit() {
+		return contactLimit;
+	}
+
+	public void setContactLimit(int contactLimit) {
+		this.contactLimit = contactLimit;
+	}
+
+	public int getNoteLimit() {
+		return noteLimit;
+	}
+
+	public void setNoteLimit(int noteLimit) {
+		this.noteLimit = noteLimit;
+	}
+
+	public boolean isPremium() {
+		return premium;
+	}
+
+	public void setPremium(boolean premium) {
+		this.premium = premium;
 	}
 
 	public User() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.premium = false;
+		this.contactLimit = 100;
+		this.noteLimit = 50;
 	}
-	
-	
 }

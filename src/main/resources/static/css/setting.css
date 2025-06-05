@@ -1,0 +1,213 @@
+/* Container for settings page */
+.setting {
+	padding: 2rem;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #fafafa;
+	min-height: 50vh;
+}
+
+/* Center container with max width */
+.setting .container {
+	max-width: 800px;
+	margin: auto;
+	padding: 2rem;
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Main heading */
+.setting h2 {
+	font-size: 2rem;
+	margin-bottom: 1.5rem;
+	color: #222;
+	text-align: center;
+}
+
+/* Flash message styling */
+.setting .alert {
+	padding: 0.8rem 1rem;
+	margin-bottom: 1.5rem;
+	border-radius: 5px;
+	font-weight: 600;
+}
+
+.setting .alert-success {
+	background-color: #e0f7e9;
+	color: #2e7d32;
+	border: 1px solid #b9e4c9;
+}
+
+.setting .alert-error, .setting .alert-danger {
+	background-color: #fdecea;
+	color: #c0392b;
+	border: 1px solid #f5c6cb;
+}
+
+/* Section card styling to visually separate sections */
+.section-card {
+	background-color: #fefefe;
+	padding: 2rem;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+	margin-bottom: 2.5rem;
+	
+}
+
+/* Section headings */
+.setting h3 {
+	font-size: 1.4rem;
+	color: #333;
+	margin-bottom: 1.5rem;
+}
+/* Form styling */
+.setting form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.8rem;
+}
+
+/* Labels */
+.setting label {
+	font-weight: 600;
+	color: #444;
+	margin-bottom: 0.4rem;
+}
+
+/* Inputs */
+.setting input[type="text"], .setting input[type="email"], .setting input[type="password"]
+	{
+	padding: 0.7rem 1rem;
+	font-size: 1rem;
+	border: 1.5px solid #ccc;
+	border-radius: 6px;
+	background-color: #fff;
+	transition: border-color 0.3s ease;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.setting input:focus {
+	outline: none;
+	border-color: #3498db;
+	background-color: #fcfcfc;
+}
+
+/* Profile image styling */
+.profile-img {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid #ddd;
+	margin-bottom: 1.2rem;
+	align-self: center;
+}
+
+/* Buttons */
+.setting button {
+	align-self: flex-start;
+	padding: 0.75rem 1.5rem;
+	background-color: #3498db;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	font-size: 1rem;
+}
+
+.setting button:hover {
+	background-color: #2c80b4;
+}
+
+/* Horizontal rule */
+.setting hr {
+	border: none;
+	border-top: 1px solid #eee;
+	margin: 2rem 0;
+}
+
+/* Responsive adjustments */
+@media ( max-width : 600px) {
+	.setting .container {
+		padding: 1.5rem;
+	}
+	.setting h2 {
+		font-size: 1.5rem;
+	}
+	.setting h3 {
+		font-size: 1.2rem;
+	}
+	.profile-img {
+		width: 100px;
+		height: 100px;
+	}
+	.setting button {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+/* Scope all styles under `.user-profile` to prevent global impact */
+.user-profile {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #f4f6f9;
+	padding: 2rem 28rem;
+	padding-bottom: 20%;
+}
+
+.user-profile .card {
+	background-color: #fff;
+	border: none;
+	border-radius: 1.25rem;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-profile .card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.user-profile .card-body {
+	padding: 2rem;
+}
+
+.user-profile .img-thumbnail {
+	border-radius: 50%;
+	border: 3px solid #007bff;
+	padding: 4px;
+	background-color: #fff;
+	object-fit: cover;
+}
+
+.user-profile .card-title {
+	font-size: 1.8rem;
+	color: #343a40;
+	margin-top: 1rem;
+}
+
+.user-profile .card-text {
+	font-size: 1.05rem;
+	color: #6c757d;
+	margin-bottom: 0.5rem;
+}
+
+.user-profile .card-text strong {
+	color: #007bff;
+}
+
+@media ( max-width : 576px) {
+	.user-profile .card-title {
+		font-size: 1.5rem;
+	}
+	.user-profile .img-thumbnail {
+		width: 120px !important;
+		height: 120px !important;
+	}
+	.user-profile .card-body {
+		padding: 1.5rem 1rem;
+	}
+}

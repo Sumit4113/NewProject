@@ -2,57 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="user/base::layout(~{::section})">
 <head>
-<meta charset="UTF-8">
-<title>profile</title>
+<title>User Profile</title>
 </head>
+
 <body>
-	<section class="profile">
-	
-		<div class="container text-center">
-
-			<div class="card">
-
-				<div class="card-body">
-				
-				<img class="myprofile" alt="profile" src=""
-						style="height: 200px; width: 200px"
-						th:src="@{'/image/'+${user.imageUrl}}">
-
-					<table class="table mt-5">
-						<thead>
-						<tr>
-								<th scope="row">USER NAME</th>
-								<th><span th:text="${user.name}"></span></th>
-							</tr>
-							<tr>
-								<th scope="col">#USERId</th>
-								<th scope="col"><span th:text="${user.id}"></span></th>
-
-							</tr>
-
-							<tr>
-									<th scope="row">EMAIL</th>
-								<th><span th:text="${user.email}"></span></th>
-							</tr>
-							<tr>
-								<th scope="row">ROLE</th>
-								<th><span th:text="${user.role}"></span></th>
-							</tr>
-							<tr>
-								<th scope="row">ACCOUNT ACTIVE</th>
-								<th><span th:text="${user.enabled}"></span></th>
-							</tr>
-
-						</thead>
-					</table>
-
+	<section class="user-profile container py-5">
+		<div class="card shadow-lg mx-auto" style="max-width: 600px;">
+			<div class="card-body text-center">
+				<div class="mb-3">
+					<img th:if="${imageBase64 != null}"
+						th:src="'data:image/jpeg;base64,' + ${imageBase64}"
+						alt="Profile Picture" class="rounded-circle img-thumbnail"
+						style="width: 150px; height: 150px;" />
+					<img th:if="${imageBase64 == null}" src="/img/default-profile.png"
+						alt="Default Profile Picture" class="rounded-circle img-thumbnail"
+						style="width: 150px; height: 150px;" />
 				</div>
-
+				<h3 class="card-title" th:text="${user.name}">User Name</h3>
+				<p class="card-text text-muted">
+					<strong>Email:</strong> <span th:text="${user.email}">email@example.com</span>
+				</p>
+				<p class="card-text text-muted">
+					<strong>User ID:</strong> <span th:text="${user.id}">123</span>
+				</p>
+				<p class="card-text text-muted">
+					<strong>Total Contacts:</strong> <span th:text="${user.contact.size()}">0</span>
+				</p>
 			</div>
-
-
 		</div>
 	</section>
-
 </body>
+
 </html>

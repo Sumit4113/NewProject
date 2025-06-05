@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.entites.User;
 import com.example.repository.UserRepository;
@@ -69,7 +70,8 @@ public class ForgotController {
 	}
 
 	@RequestMapping("/passchange")
-	public String change(@RequestParam("newpassword") String newpassword, HttpSession session) {
+	public String change(@RequestParam("newpassword") String newpassword, HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		String email = (String) session.getAttribute("email");
 
 		if (email == null) {
@@ -86,8 +88,8 @@ public class ForgotController {
 		user.setPassword(this.passwordEncoder.encode(newpassword));
 		this.userrepo.save(user);
 
-		session.setAttribute("message", "Password changed successfully. You can now login.");
-		return "redirect:passwordchange";
+		redirectAttributes.addFlashAttribute("message", "Password changed successfully. You can now login.");
+		return "redirect:/login";
 
 	}
 

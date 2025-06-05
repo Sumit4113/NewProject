@@ -1,173 +1,309 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Contact Manager - Organize Your Contacts
+	Intelligently</title>
 <link rel="stylesheet" th:href="@{/css/homepage.css}">
-<title>Home</title>
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+	rel="stylesheet">
+
+<style>
+</style>
 </head>
 <body>
+	<style>
+/* Mobile view */
+@media ( max-width : 768px) {
+	.menu-toggle {
+		display: block;
+	}
+	.nav-links {
+		display: none;
+		flex-direction: column;
+		background-color: silver;
+		position: absolute;
+		top: 70px;
+		right: 20px;
+		width: 200px;
+		border-radius: 10px;
+		padding: 1rem;
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	}
+	.nav-links.show {
+		display: flex;
+	}
+	.nav-links li {
+		margin-bottom: 10px;
+	}
+}
+</style>
+	<!-- Header -->
+	<header>
+		<nav>
+			<div class="logo">Smart Contact Manager</div>
+			<div class="menu-toggle" id="mobile-menu">&#9776;</div>
+			<ul class="nav-links" id="nav-links">
+				<li><a href="#home">Home</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="#auth">Login/Register</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
 
-	<!-- Anchors for Sliding -->
-	<div id="home"></div>
-	<div id="login"></div>
-	<div id="register"></div>
 
+	<!-- Hero Section -->
+	<section id="home" class="hero">
+		<div class="hero-content">
+			<h1>Smart Contact Manager</h1>
+			<p>Organize, manage, and connect with your contacts
+				intelligently. Experience the future of contact management with our
+				advanced features and intuitive interface.</p>
+			<a href="#auth" class="cta-button">Get Started Today</a>
+			<div class="hero-image"></div>
 
-	<!-- Navigation -->
-	<nav>
-		<div class="logo">
-			Contact<span>Manager</span>
+			<ul class="features-list animate-on-scroll">
+				<li>⚡ Real-time syncing across devices</li>
+				<li>🔐 End-to-end encrypted contacts</li>
+				<li>📁 Custom tags and smart categorization</li>
+				<li>🔍 Fast search and filtering</li>
+			</ul>
 		</div>
-		<div class="menu-toggle" onclick="toggleMenu()">☰</div>
-		<ul class="nav-links">
-			<li><a href="#home" onclick="closeMenu()">Home</a></li>
-			<li><a href="#about" onclick="closeMenu()">About</a></li>
-			<li><a href="#login" onclick="closeMenu()">Login</a></li>
-			<li><a href="#register" onclick="closeMenu()">Register</a></li>
-		</ul>
-	</nav>
+	</section>
 
-
-	<!-- Sliding Panels -->
-	<div class="slider-container">
-
-		<!-- Home Panel -->
-		<section class="home-panel">
-			<h1>Manage Your Contacts Effortlessly</h1>
-			<p>Simple, secure and intuitive platform to organize your
-				connections.</p>
-			<a href="#login" class="cta-btn">Get Started</a>
-		</section>
-
-		<!-- Login Panel -->
-		<section class="login-panel">
-
-			<div class="form-box">
-				<h2>Login</h2>
-				<form th:action="@{/dologin}" method="post">
-					<div th:if="${param.error}" style="color: red;">Invalid
-						credentials</div>
-					<input type="email" name="username" placeholder="Email" required />
-					<input type="password" name="password" placeholder="Password"
-						required /> <a th:href="@{/forgot}">Forgot password?</a>
-					<button type="submit">Login</button>
-					<h5>
-						<a href="#register">Register</a>
-					</h5>
-				</form>
-			</div>
-		</section>
-
-		<!-- Register Panel -->
-		<section class="register-panel">
-			<div class="form-box">
-				<h2>Register</h2>
-				<form th:action="@{/registers}" method="post" th:object="${user2}">
-					<div th:if="${success}" style="color: green;" th:text="${success}"></div>
-					<div th:if="${error}" style="color: red;" th:text="${error}"></div>
-					<input th:field="*{name}" type="text" placeholder="Full Name"
-						required /> <input th:field="*{email}" type="email"
-						placeholder="Email" required /> <input th:field="*{password}"
-						type="password" placeholder="Password" required /> <input
-						th:field="*{imageUrl}" type="file" accept="image/*" />
-					<button type="submit">Register</button>
-					<h5>
-						<a href="#login">Login</a>
-					</h5>
-				</form>
-			</div>
-		</section>
-
-	</div>
-
+	<!-- About Section -->
 	<section id="about" class="about">
-		<h2 class="section-title">About Us</h2>
-		<div class="about-content">
-			<div class="about-text">
-				<p>Contact Manager is a powerful yet simple tool designed to
-					help you organize and manage your contacts efficiently. Whether
-					you're a business professional, freelancer, or just someone who
-					wants to keep their contacts organized, our platform provides the
-					perfect solution.</p>
-				<p>Founded in 2023, we've been dedicated to creating a
-					user-friendly experience that makes contact management a breeze.
-					Our team of passionate developers and designers work tirelessly to
-					ensure that you have the best tools at your disposal.</p>
-			</div>
-			<div class="about-image">
-				<img
-					src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-					alt="Team working together">
+		<div class="container">
+			<h2 class="section-title animate-on-scroll">About Smart Contact
+				Manager</h2>
+			<div class="about-content">
+				<div class="about-text animate-on-scroll">
+					<h3>Revolutionizing Contact Management</h3>
+					<p>Smart Contact Manager is a cutting-edge solution designed to
+						streamline your contact management experience. With intelligent
+						features and seamless integration, we help you stay connected with
+						what matters most.</p>
+					<p>Our platform combines modern technology with user-friendly
+						design to provide you with the most efficient way to organize and
+						manage your professional and personal contacts.</p>
+					<ul class="features">
+						<li>Intelligent contact organization and categorization</li>
+						<li>Advanced search and filtering capabilities</li>
+						<li>Seamless integration with popular platforms</li>
+						<li>Secure cloud-based storage and backup</li>
+						<li>Mobile-responsive design for on-the-go access</li>
+					</ul>
+				</div>
+				<div class="about-image animate-on-scroll">
+					<img
+						src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+						alt="Professional team collaboration">
+				</div>
 			</div>
 		</div>
-
 	</section>
 
+	<!-- Auth Section -->
+	<section id="auth" class="auth-section">
+		<div class="container">
+			<h2 class="section-title animate-on-scroll">Join Smart Contact
+				Manager</h2>
+			<div class="auth-container">
+				<div class="auth-card">
+					<h3>Login</h3>
+					<p>Already have an account? Sign in to access your contacts and
+						continue managing your network efficiently.</p>
+					<a th:href="@{/user/index}" class="auth-button">Sign In</a>
+				</div>
+				<div class="auth-card">
+					<h3>Register</h3>
+					<p>New to Smart Contact Manager? Create your account and start
+						organizing your contacts like never before.</p>
+					<a th:href="@{/register}" class="auth-button">Sign Up</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Contact Section -->
 	<section id="contact" class="contact">
-		<h2 class="section-title">Contact Us</h2>
-		<div class="contact-content">
-			<div class="contact-info">
-				<h3>Get In Touch</h3>
-				<p>Have questions or feedback? We'd love to hear from you! Fill
-					out the form or reach out to us directly using the information
-					below.</p>
-				<p>
-					<strong>Email:</strong> support@contactmanager.com
-				</p>
-				<p>
-					<strong>Phone:</strong> +1 (555) 123-4567
-				</p>
-				<p>
-					<strong>Address:</strong> 123 Contact Street, Digital City, CM
-					12345
-				</p>
-			</div>
-			<div class="contact-form">
-				<form>
-					<div class="form-group">
-						<label for="name">Name</label> <input type="text" id="name"
-							name="name" required>
+		<div class="container">
+			<h2 class="section-title animate-on-scroll">Get In Touch</h2>
+			<div class="contact-content">
+				<div class="contact-info animate-on-scroll">
+					<h3>Contact Information</h3>
+					<div class="contact-item">
+						<div class="contact-item-icon">📧</div>
+						<div>
+							<strong>Email</strong><br> support@smartcontactmanager.com
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="email">Email</label> <input type="email" id="email"
-							name="email" required>
+					<div class="contact-item">
+						<div class="contact-item-icon">📞</div>
+						<div>
+							<strong>Phone</strong><br> +1 (555) 123-4567
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="subject">Subject</label> <input type="text"
-							id="subject" name="subject" required>
+					<div class="contact-item">
+						<div class="contact-item-icon">📍</div>
+						<div>
+							<strong>Address</strong><br> 123 Tech Street, Digital City,
+							DC 12345
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="message">Message</label>
-						<textarea id="message" name="message" required></textarea>
+					<div class="contact-item">
+						<div class="contact-item-icon">🕒</div>
+						<div>
+							<strong>Business Hours</strong><br> Mon - Fri: 9:00 AM -
+							6:00 PM
+						</div>
 					</div>
-					<button type="submit" class="submit-btn">Send Message</button>
-				</form>
+				</div>
+				<div class="contact-form animate-on-scroll">
+					<form>
+						<div class="form-group">
+							<label for="name">Full Name</label> <input type="text" id="name"
+								name="name" required>
+						</div>
+						<div class="form-group">
+							<label for="email">Email Address</label> <input type="email"
+								id="email" name="email" required>
+						</div>
+						<div class="form-group">
+							<label for="subject">Subject</label> <input type="text"
+								id="subject" name="subject" required>
+						</div>
+						<div class="form-group">
+							<label for="message">Message</label>
+							<textarea id="message" name="message" rows="5" required></textarea>
+						</div>
+						<button type="submit" class="submit-button">Send Message</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</section>
 
+	<!-- Footer -->
 	<footer>
-		<div class="footer-content">
-			<div class="logo">
-				Contact<span>Manager</span>
+		<div class="container">
+			<div class="footer-content">
+				<div class="footer-section">
+					<h3>Smart Contact Manager</h3>
+					<p>Revolutionizing the way you manage and organize your
+						contacts with intelligent features and seamless user experience.</p>
+				</div>
+				<div class="footer-section">
+					<h3>Quick Links</h3>
+					<p>
+						<a href="#home">Home</a>
+					</p>
+					<p>
+						<a href="#about">About Us</a>
+					</p>
+					<p>
+						<a href="#auth">Login/Register</a>
+					</p>
+					<p>
+						<a href="#contact">Contact</a>
+					</p>
+				</div>
+				<div class="footer-section">
+					<h3>Support</h3>
+					<p>
+						<a href="#">Help Center</a>
+					</p>
+					<p>
+						<a href="#">Privacy Policy</a>
+					</p>
+					<p>
+						<a href="#">Terms of Service</a>
+					</p>
+					<p>
+						<a href="#">FAQ</a>
+					</p>
+				</div>
+				<div class="footer-section">
+					<h3>Connect With Us</h3>
+					<p>
+						<a href="#">Facebook</a>
+					</p>
+					<p>
+						<a href="#">Twitter</a>
+					</p>
+					<p>
+						<a href="#">LinkedIn</a>
+					</p>
+					<p>
+						<a href="#">Instagram</a>
+					</p>
+				</div>
 			</div>
-			<div class="social-links">
-				<a href="#">📘</a> <a href="#">📱</a> <a href="#">📸</a> <a href="#">📧</a>
+			<div class="footer-bottom">
+				<p>&copy; 2024 Smart Contact Manager. All rights reserved.</p>
 			</div>
-			<p>&copy; 2023 ContactManager. All rights reserved.</p>
 		</div>
 	</footer>
 
-
 	<script>
-		function toggleMenu() {
-			document.querySelector('.nav-links').classList.toggle('active');
-		}
+    document.getElementById('mobile-menu').addEventListener('click', function () {
+    	  document.getElementById('nav-links').classList.toggle('show');
+    	});
 
-		function closeMenu() {
-			document.querySelector('.nav-links').classList.remove('active');
-		}
-	</script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'transparent';
+                header.style.backdropFilter = 'blur(3px)';
+            } else {
+                header.style.background = 'gray';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Form submission handler
+        document.querySelector('.contact-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            this.reset();
+        });
+    </script>
 </body>
 </html>

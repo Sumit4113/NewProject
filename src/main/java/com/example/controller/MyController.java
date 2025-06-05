@@ -5,10 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import com.example.entites.User;
 import com.example.repository.UserRepository;
@@ -25,56 +29,59 @@ public class MyController {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@RequestMapping("/")
-	public String base(Model model , User user) {
+	public String base(Model model, User user) {
 		model.addAttribute("user2", user);
 		return "home";
 	}
-	
 
-	
-
-	@RequestMapping("/about")
-	public String view2(Model model , User user) {
-		model.addAttribute("user2", user);
-		return "base";
+	@GetMapping("/register")
+	public String registerPage(Model model) {
+		model.addAttribute("title", "Register Page");
+		model.addAttribute("User2", new User());
+		return "register";
 	}
-	
-	
 
-	// handler for registering user
-	@RequestMapping("/registers")
-	public String registerUser(@ModelAttribute("user2") User user, Model model, RedirectAttributes redirectAttribute) {
+	@PostMapping("/registers")
+	public String registerUser(@ModelAttribute("User2") User user, @RequestParam("profileImage") MultipartFile file,
+			RedirectAttributes redirectAttribute) {
 
 		try {
-			User email = this.userRepository.findByUserName(user.getEmail());
-
-			if (email != null) {
+			// Check for existing user
+			User existing = this.userRepository.findByUserName(user.getEmail());
+			if (existing != null) {
 				redirectAttribute.addFlashAttribute("error", "Email already registered!");
-				return "redirect:/#register";
+				return "redirect:/register";
 			}
 
-			// Encrypt password before saving
+			// Set role and encrypt password
 			user.setRole("ROLE_USER");
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+			// Save profile image if not empty
+			if (!file.isEmpty()) {
+				user.setImage(file.getBytes());
+			}
+
+			// Save user
 			userRepository.save(user);
 
 			redirectAttribute.addFlashAttribute("success", "Registration successful! Please login.");
-			return "redirect:/#register";
+			return "redirect:/register";
 
 		} catch (Exception e) {
 			redirectAttribute.addFlashAttribute("error", "An error occurred: " + e.getMessage());
-			return "redirect:/#register";
+			return "redirect:/register";
 		}
 	}
 
 	// custom login page
-	@RequestMapping("/login")
-	public String loginPage(Model model) {
+	@RequestMapping("/loginPage")
+	public String loginPage(Model model, RedirectAttributes redirectAttributes) {
 
 		User user = new User();
 
-		model.addAttribute("login", user);
-
+		model.addAttribute("user", user);
+		redirectAttributes.addFlashAttribute("error", "Invalid credentials");
 		return "login";
 	}
 

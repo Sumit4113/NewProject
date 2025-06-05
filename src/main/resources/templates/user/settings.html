@@ -3,12 +3,11 @@
 	th:replace="user/base::layout(~{::section})">
 <head>
 <title>Settings</title>
-
-
+<link rel="stylesheet" href="settings.css" />
+<!-- Link your CSS file here -->
 </head>
 <body>
-
-	<section>
+	<section class="setting">
 		<div class="container">
 			<h2>⚙️ Settings</h2>
 
@@ -19,7 +18,7 @@
 			</div>
 
 			<!-- Change Password Section -->
-			<div>
+			<div class="password section-card">
 				<h3>🔐 Change Password</h3>
 				<form th:action="@{/user/changepass}" method="post">
 					<label for="oldpass">Old Password</label> <input type="password"
@@ -28,23 +27,22 @@
 						required>
 
 					<button type="submit">Change Password</button>
-					
 				</form>
 			</div>
 
 			<hr>
 
 			<!-- Update Profile Section -->
-			<div>
+			<div class="profileupdate section-card">
 				<h3>👤 Update Profile</h3>
 				<form th:action="@{/user/update-profile}" method="post"
 					enctype="multipart/form-data">
-					<label for="name">Name</label> <input type="text" name="name"
-						id="name" th:value="${user.name}" required> <label
-						for="email">Email</label> <input type="email" name="email"
-						id="email" th:value="${user.email}" readonly>
-						
-				
+					<img th:src="@{/user/profile-image}" alt="Profile Picture"
+						id="preview" class="profile-img" /> <label for="name">Name</label>
+					<input type="text" name="name" id="name" th:value="${user.name}"
+						required> <label for="email">Email</label> <input
+						type="email" name="email" id="email" th:value="${user.email}"
+						readonly>
 
 					<button type="submit">Update Profile</button>
 				</form>

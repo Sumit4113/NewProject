@@ -6,47 +6,97 @@
 <title>UpdateContact</title>
 </head>
 <body>
-	<section class="contact_form">
-		<form action="#" th:object="${contact}" enctype="multipart/form-data"
-			method="post" th:action="@{/user/update}">
-			<div class="form-container">
+	<section>
+
+		<!-- Add Contact Section -->
+		<section class="section active" id="add-contact">
+			<h1 class="page-title">Update Contact</h1>
+
+			<div class="card">
+				<div class="card-header">
+					<div class="card-icon icon-green">➕</div>
+					<h3 class="card-title">Contact Information</h3>
+				</div>
+				<!-- Session Message (outside the form) -->
 				<div th:if="${session.message}"
 					class="alert alert-[[${session.message.type}]]" role="alert">
 					<span th:text="${session.message.content}"></span>
 				</div>
-				<h2>Update Contact</h2>
 
-				<input type="hidden" th:value="${contact.cId}" name="cId" />
 
-				<div class="form-group">
-					<i class="fa-solid fa-plus"></i> <label for="username">User
-						name:</label> <input th:value="${contact.username}" type="text"
-						id="username" name="username" required>
-				</div>
-				<div class="form-group">
-					<i class="fa-solid fa-user"></i> <label for="lastName">Last
-						Name:</label> <input th:value="${contact.lastName}" type="text"
-						id="lastName" name="lastName" required>
-				</div>
-				<div class="form-group">
-					<i class="fa-solid fa-envelope"></i> <label for="email">Email:</label>
-					<input th:value="${contact.email}" type="email" id="email"
-						name="email" required>
-				</div>
-				<div class="form-group">
-					<i class="fa-solid fa-phone"></i> <label for="phonenumber">Phone
-						Number:</label> <input th:value="${contact.phone}" type="tel"
-						id="phonenumber" name="phone" required>
-				</div>
-				<div class="form-group">
-					<i class="fa-solid fa-image"></i> <label for="image">Upload
-						Image:</label> <input type="file" id="image" name="profileimage">
-				</div>
+				<form action="#" th:object="${contact}"
+					enctype="multipart/form-data" method="post"
+					th:action="@{/user/update}">
 
-					<input type="submit" value="Save Contact">
+
+					<div class="form-row">
+						<div class="form-group">
+							<label class="form-label">First Name *</label> <input type="text"
+								class="form-input" th:value="${contact.username}"
+								name="username" required placeholder="Enter first name">
+						</div>
+						<div class="form-group">
+							<label class="form-label">Last Name *</label> <input type="text"
+								class="form-input" th:value="${contact.lastname}" required
+								placeholder="Enter last name">
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group">
+							<label class="form-label">Email Address</label> <input
+								type="email" class="form-input" th:value="${contact.email}"
+								placeholder="Enter email">
+						</div>
+						<div class="form-group">
+							<label class="form-label">Phone Number *</label> <input
+								type="tel" class="form-input" th:value="${contact.phone}"
+								required placeholder="Enter phone">
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group">
+							<label class="form-label" for="image">Upload Image:</label> <input
+								class="form-input" type="file" id="image" name="profileimage">
+						</div>
+						<div class="form-group">
+							<label class="form-label">Job Title</label> <input type="text"
+								class="form-input" th:value="${contact.jobTitle}"
+								placeholder="Enter job title">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="form-label">Address</label> <input type="text"
+							class="form-input" th:value="${contact.address}"
+							placeholder="Enter address">
+					</div>
+
+
+
+					<div class="form-group">
+						<img th:if="${contact.image}"
+							th:src="@{'/image/' + ${contact.image}}" alt="Preview"
+							width="100px" />
+					</div>
+
+					<div style="display: flex; gap: 1rem;">
+						<button type="submit" class="btn btn-primary">
+							<span>💾</span> Save Contact
+						</button>
+						<button type="reset" class="btn btn-outline">
+							<span>🔄</span> Reset Form
+						</button>
+					</div>
+				</form>
 			</div>
-		</form>
+		</section>
+
 	</section>
-	
+
+
+
+
 </body>
 </html>

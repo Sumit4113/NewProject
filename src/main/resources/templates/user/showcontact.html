@@ -6,12 +6,8 @@
 <title>Show Contact</title>
 </head>
 <body>
-	<style>
-.alert {
-	opacity: 1;
-	transition: opacity 0.8s ease;
-}
-</style>
+
+
 
 	<section class="showcontacts">
 		<div class="card ml-3">
@@ -43,9 +39,11 @@
 					<tbody>
 						<tr th:each="c : ${contacts}">
 							<th th:text="'SCM2025'+${c.cId}"></th>
+
 							<td><img class="myprofile" alt="profile" src=""
-								th:src="@{'/image/'+${c.image}}"> <span
-								th:text="${c.username}"></span></td>
+								th:src="@{'/image/'+${c.image}}"
+								>
+								<span th:text="${c.username}"></span></td>
 
 							<td th:text="${c.lastName}"></td>
 

@@ -2,12 +2,13 @@ package com.example.entites;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -22,7 +23,11 @@ public class Contact {
 	private String lastname;
 	private String email;
 	private String phone;
-	private String image;
+	private String jobTitle;
+	private String address;
+	@Lob
+	@Column(length = 16777215) // 16 MB max
+	private byte[] image;
 
 	@ManyToOne
 	@JsonIgnore
@@ -39,6 +44,64 @@ public class Contact {
 	public Contact() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
+	
+
+	/**
+	 * @return the image
+	 */
+	public byte[] getImage() {
+		return image;
+	}
+
+	/**
+	 * @return the lastname
+	 */
+	public String getLastname() {
+		return lastname;
+	}
+
+	/**
+	 * @param lastname the lastname to set
+	 */
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	/**
+	 * @return the jobTitle
+	 */
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	/**
+	 * @param jobTitle the jobTitle to set
+	 */
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	/**
@@ -109,20 +172,6 @@ public class Contact {
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	/**
-	 * @return the image
-	 */
-	public String getImage() {
-		return image;
-	}
-
-	/**
-	 * @param image the image to set
-	 */
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	@Override

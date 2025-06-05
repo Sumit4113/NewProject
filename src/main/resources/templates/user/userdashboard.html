@@ -1,207 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="user/base::layout(~{::section})">
+	th:replace="user/base :: layout(~{::section})">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Contact Manager - Dashboard</title>
-<link rel="stylesheet" th:href="@{/css/dashboard.css}">
-
+<title>Home Dashboard</title>
 </head>
 <body>
 	<section>
+		<!-- Content -->
+		<div class="content">
+			<!-- Dashboard Section -->
+			<section class="section active" id="dashboard">
+				<h1 class="page-title">Dashboard</h1>
 
-		<!-- User Profile Section -->
-		<section class="user-profile">
-
-			<img class="myprofile" alt="profile" src=""
-				style="height: 200px; width: 200px"
-				th:src="@{'/image/'+${user.imageUrl}}">
-			<div class="profile-info">
-				<h1>
-					<span th:text="${user.name}"></span>
-				</h1>
-				<p>
-					<span th:text="${user.email}"></span>
-				</p>
-				<p>
-					#USERID :<span th:text="${user.id}"></span>
-				</p>
-			</div>
-			<div class="profile-stats">
-				<div class="stat-item">
-					<div class="stat-number" th:text="${totalContacts}"></div>
-					<div class="stat-label">Total Contacts</div>
+				<!-- Stats Grid -->
+				<div class="stats-grid">
+					<div class="stat-card">
+						<div class="stat-number" th:text="${totalContacts}">247</div>
+						<div class="stat-label">Total Contacts</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-number" th:text="${groups}">12</div>
+						<div class="stat-label">Groups</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-number" th:text="${favorites}">89</div>
+						<div class="stat-label">Favorites</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-number" th:text="${recentCalls}">156</div>
+						<div class="stat-label">Recent Calls</div>
+					</div>
 				</div>
 
-			</div>
-		</section>
-
-
-
-		<!-- Contacts Section -->
-		<section class="contacts-section">
-			<div class="section-header">
-				<h2 class="section-title">Recent Contacts</h2>
-				<input type="text" class="search-box"
-					placeholder="Search contacts...">
-			</div>
-			<div class="contacts-grid" id="contactsGrid">
-				<!-- Sample Contacts -->
-				<div class="contact-card">
-					<div class="contact-header">
-						<div class="contact-avatar">AS</div>
-						<div class="contact-info">
-							<h3>Alice Smith</h3>
-							<p>alice.smith@email.com</p>
-							<p>+1 (555) 987-6543</p>
+				<!-- Dashboard Grid -->
+				<div class="dashboard-grid">
+					<!-- Recent Contacts -->
+					<div class="card">
+						<div class="card-header">
+							<div class="card-icon icon-blue">📇</div>
+							<h3 class="card-title">Recent Contacts</h3>
+						</div>
+						<div class="contact-list">
+							<div class="contact-card" th:each="contact : ${recentContacts}">
+								<div class="contact-header">
+									<div class="contact-avatar"
+										th:text="${contact.firstName.substring(0,1) + contact.lastName.substring(0,1)}">AM</div>
+									<div class="contact-info">
+										<h3 th:text="${contact.firstName + ' ' + contact.lastName}">Alice
+											Miller</h3>
+										<p th:text="${contact.email}">alice@example.com</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="contact-actions">
-						<button class="contact-btn call-btn">
-							<span class="icon-phone"></span> Call
-						</button>
-						<button class="contact-btn message-btn">
-							<span class="icon-message"></span> Message
-						</button>
-						<button class="contact-btn edit-btn">
-							<span class="icon-edit"></span> Edit
-						</button>
-					</div>
-				</div>
 
-				<div class="contact-card">
-					<div class="contact-header">
-						<div class="contact-avatar">BJ</div>
-						<div class="contact-info">
-							<h3>Bob Johnson</h3>
-							<p>bob.johnson@email.com</p>
-							<p>+1 (555) 456-7890</p>
+					<!-- Quick Actions -->
+					<div class="card">
+						<div class="card-header">
+							<div class="card-icon icon-green">📊</div>
+							<h3 class="card-title">Quick Actions</h3>
+						</div>
+						<div style="display: flex; flex-direction: column; gap: 1rem;">
+							<button class="btn btn-primary">
+								<span>➕</span> Add New Contact
+							</button>
+							<button class="btn btn-outline">
+								<span>📤</span> Import Contacts
+							</button>
+							<button class="btn btn-outline">
+								<span>📥</span> Export Contacts
+							</button>
 						</div>
 					</div>
-					<div class="contact-actions">
-						<button class="contact-btn call-btn">
-							<span class="icon-phone"></span> Call
-						</button>
-						<button class="contact-btn message-btn">
-							<span class="icon-message"></span> Message
-						</button>
-						<button class="contact-btn edit-btn">
-							<span class="icon-edit"></span> Edit
-						</button>
-					</div>
 				</div>
-
-				<div class="contact-card">
-					<div class="contact-header">
-						<div class="contact-avatar">CD</div>
-						<div class="contact-info">
-							<h3>Carol Davis</h3>
-							<p>carol.davis@email.com</p>
-							<p>+1 (555) 321-0987</p>
-						</div>
-					</div>
-					<div class="contact-actions">
-						<button class="contact-btn call-btn">
-							<span class="icon-phone"></span> Call
-						</button>
-						<button class="contact-btn message-btn">
-							<span class="icon-message"></span> Message
-						</button>
-						<button class="contact-btn edit-btn">
-							<span class="icon-edit"></span> Edit
-						</button>
-					</div>
-				</div>
-
-				<div class="contact-card">
-					<div class="contact-header">
-						<div class="contact-avatar">DW</div>
-						<div class="contact-info">
-							<h3>David Wilson</h3>
-							<p>david.wilson@email.com</p>
-							<p>+1 (555) 654-3210</p>
-						</div>
-					</div>
-					<div class="contact-actions">
-						<button class="contact-btn call-btn">
-							<span class="icon-phone"></span> Call
-						</button>
-						<button class="contact-btn message-btn">
-							<span class="icon-message"></span> Message
-						</button>
-						<button class="contact-btn edit-btn">
-							<span class="icon-edit"></span> Edit
-						</button>
-					</div>
-				</div>
-			</div>
-		</section>
+			</section>
+		</div>
 	</section>
-
-	<script>
-        // Sidebar Toggle Functionality
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-
-        function toggleSidebar() {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        menuToggle.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
-
-        // Add Contact Function
-        function addContact() {
-            alert('Add Contact functionality would open a form here!');
-        }
-
-        // Search Functionality
-        const searchBox = document.querySelector('.search-box');
-        const contactCards = document.querySelectorAll('.contact-card');
-
-        searchBox.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            
-            contactCards.forEach(card => {
-                const contactName = card.querySelector('h3').textContent.toLowerCase();
-                const contactEmail = card.querySelector('p').textContent.toLowerCase();
-                
-                if (contactName.includes(searchTerm) || contactEmail.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-
-        // Contact Action Handlers
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('call-btn')) {
-                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
-                alert(`Calling ${contactName}...`);
-            }
-            
-            if (e.target.classList.contains('message-btn')) {
-                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
-                alert(`Opening message for ${contactName}...`);
-            }
-            
-            if (e.target.classList.contains('edit-btn')) {
-                const contactName = e.target.closest('.contact-card').querySelector('h3').textContent;
-                alert(`Editing ${contactName}...`);
-            }
-        });
-
-        // Close sidebar on window resize if mobile
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            }
-        });
-    </script>
 </body>
 </html>

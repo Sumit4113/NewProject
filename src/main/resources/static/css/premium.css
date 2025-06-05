@@ -1,0 +1,88 @@
+
+
+.premium-wrapper {
+	padding: 2rem 1rem;
+	max-width: 1200px;
+	margin: auto;
+	font-family: 'Segoe UI', sans-serif;
+	background-color: #f7f9fb;
+	color: #333;
+}
+
+.premium-wrapper .title {
+	text-align: center;
+	font-size: 2.5rem;
+	color: #2c3e50;
+	margin-bottom: 0.5rem;
+}
+
+.premium-wrapper .subtitle {
+	text-align: center;
+	font-size: 1.1rem;
+	color: #555;
+	margin-bottom: 2.5rem;
+}
+
+.premium-wrapper .features-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 1.5rem;
+}
+
+.premium-wrapper .feature-card {
+	background: #fff;
+	padding: 1.5rem;
+	border-radius: 12px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+	text-align: center;
+	transition: transform 0.3s ease;
+}
+
+.premium-wrapper .feature-card:hover {
+	transform: translateY(-6px);
+}
+
+.premium-wrapper .feature-card .icon {
+	font-size: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.premium-wrapper .feature-card h3 {
+	margin-bottom: 0.5rem;
+	color: #007bff;
+}
+
+.premium-wrapper .cta {
+	text-align: center;
+	margin-top: 3rem;
+}
+
+.premium-wrapper .btn-upgrade {
+	background-color: #007bff;
+	color: #fff;
+	font-size: 1.1rem;
+	padding: 1rem 2rem;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.premium-wrapper .btn-upgrade:hover {
+	background-color: #0056b3;
+}
+
+.premium-wrapper .note {
+	margin-top: 1rem;
+	color: #777;
+	font-size: 0.95rem;
+}
+
+@media ( max-width : 600px) {
+	.premium-wrapper .title {
+		font-size: 2rem;
+	}
+	.premium-wrapper .btn-upgrade {
+		width: 100%;
+	}
+}

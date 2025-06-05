@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login - Smart Contact Manager</title>
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
+	rel="stylesheet">
+
+<style>
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Poppins', sans-serif;
+}
+
+body {
+	background: linear-gradient( 180deg, silver, #fff);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+
+.login-container {
+	background: #fff;
+	padding: 2rem;
+	border: 1px solid #ccc;
+	width: 100%;
+	max-width: 450px;
+	border-radius: 8px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+	text-align: center;
+	margin-bottom: 1.5rem;
+	color: #2d2d2d;
+}
+
+.form-group {
+	margin-bottom: 1.2rem;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	color: #333;
+	font-weight: 500;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 0.75rem;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+	outline: none;
+	transition: border 0.3s, box-shadow 0.3s;
+	border-radius: 4px;
+}
+
+.form-group input:focus {
+	border: 1px solid #5e9cff;
+	box-shadow: 0 0 5px rgba(94, 156, 255, 0.5);
+	background-color: #f0f8ff;
+}
+
+.login-button {
+	width: 100%;
+	padding: 0.8rem;
+	background: #5e9cff;
+	color: #fff;
+	border: none;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background 0.3s ease;
+	border-radius: 4px;
+}
+
+.login-button:hover {
+	background: #468de0;
+}
+
+.social-login {
+	margin-top: 1.5rem;
+}
+
+.social-btn {
+	width: 100%;
+	padding: 0.8rem;
+	margin-bottom: 0.8rem;
+	border: none;
+	font-size: 1rem;
+	cursor: pointer;
+	color: #fff;
+	border-radius: 4px;
+}
+
+.google {
+	background-color: #db4437;
+}
+
+.google:hover {
+	background-color: #c23321;
+}
+
+.facebook {
+	background-color: #3b5998;
+}
+
+.facebook:hover {
+	background-color: #2d4373;
+}
+
+.extra-links {
+	margin-top: 1rem;
+	text-align: center;
+	font-size: 0.9rem;
+}
+
+.extra-links a {
+	color: #2c3e50;
+	text-decoration: underline;
+}
+
+.alert-error {
+	margin-bottom: 1rem;
+	padding: 0.75rem;
+	background-color: #fed7d7;
+	color: #822727;
+	border: 1px solid #e53e3e;
+	text-align: center;
+	border-radius: 4px;
+	font-weight: bold;
+}
+
+.forgot-password {
+	text-align: right;
+	font-size: 0.9rem;
+	margin-top: -0.8rem;
+	margin-bottom: 1rem;
+}
+
+.forgot-password a {
+	color: #007bff;
+	text-decoration: none;
+}
+
+.forgot-password a:hover {
+	text-decoration: underline;
+}
+
+@media ( max-width : 480px) {
+	.login-container {
+		padding: 1.5rem;
+	}
+	.login-container h2 {
+		font-size: 1.5rem;
+	}
+}
+</style>
+</head>
+<body>
+
+	<div class="login-container">
+		<h2>Login to Your Account</h2>
+
+
+
+		<form th:action="@{/dologin}" method="post">
+			<!-- Error message -->
+			<div th:if="${param.error}" class="alert-error">Invalid email
+				or password!</div>
+
+			<!-- Success message (optional if redirected after registration) -->
+
+			<div th:if="${session.message}" class="alert-success"
+				th:text="${session.message}"></div>
+
+
+			<div class="form-group">
+				<label for="email">Enter Your Email</label> <input type="email"
+					id="email" name="username" required />
+			</div>
+
+			<div class="form-group">
+				<label for="password">Enter Your Password</label> <input
+					type="password" id="password" name="password" required />
+			</div>
+			<!-- Forgot password link -->
+			<div class="forgot-password">
+				<a th:href="@{/forgot}">Forgot Password?</a>
+			</div>
+
+			<button type="submit" class="login-button">Login</button>
+		</form>
+
+		<div class="social-login">
+			<button class="social-btn google">Login with Google</button>
+			<button class="social-btn facebook">Login with Facebook</button>
+		</div>
+
+		<div class="extra-links">
+			<p>
+				Don't have an account? <a th:href="@{/register}">Register</a>
+			</p>
+		</div>
+	</div>
+
+</body>
+</html>

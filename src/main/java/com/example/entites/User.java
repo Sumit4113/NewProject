@@ -28,15 +28,6 @@ public class User {
 	@Column(length = 16777215)
 	private byte[] image;
 
-	@Column(name = "contact_limit")
-	private int contactLimit;
-
-	@Column(name = "note_limit")
-	private int noteLimit;
-
-	@Column(name = "is_premium")
-	private boolean premium;
-
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private List<Contact> contact = new ArrayList<>();
 
@@ -105,33 +96,4 @@ public class User {
 		this.image = image;
 	}
 
-	public int getContactLimit() {
-		return contactLimit;
-	}
-
-	public void setContactLimit(int contactLimit) {
-		this.contactLimit = contactLimit;
-	}
-
-	public int getNoteLimit() {
-		return noteLimit;
-	}
-
-	public void setNoteLimit(int noteLimit) {
-		this.noteLimit = noteLimit;
-	}
-
-	public boolean isPremium() {
-		return premium;
-	}
-
-	public void setPremium(boolean premium) {
-		this.premium = premium;
-	}
-
-	public User() {
-		this.premium = false;
-		this.contactLimit = 100;
-		this.noteLimit = 50;
-	}
 }

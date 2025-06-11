@@ -102,26 +102,24 @@
 
 /* Alert message */
 .alert {
-	padding: 1rem;
-	border-radius: 5px;
-	margin-bottom: 1rem;
-	font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin: 15px auto;
+    width: fit-content;
+    font-weight: 500;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .alert-success {
-	background-color: #d4edda;
-	color: #155724;
+    background-color: #d4edda;
+    color: #155724;
 }
 
 .alert-danger {
-	background-color: #f8d7da;
-	color: #721c24;
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
-.alert-warning {
-	background-color: #fff3cd;
-	color: #856404;
-}
 
 /* Pagination */
 .pagination {

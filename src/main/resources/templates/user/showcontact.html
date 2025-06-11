@@ -40,10 +40,9 @@
 						<tr th:each="c : ${contacts}">
 							<th th:text="'SCM2025'+${c.cId}"></th>
 
-							<td><img class="myprofile" alt="profile" src=""
-								th:src="@{'/image/'+${c.image}}"
-								>
-								<span th:text="${c.username}"></span></td>
+							<td><img th:src="@{'/user/image/' + ${user.id}}"
+								alt="Profile" class="myprofile" /> <span
+								th:text="${c.username}"></span></td>
 
 							<td th:text="${c.lastName}"></td>
 
@@ -102,19 +101,16 @@
 
 	</section>
 	<script>
-    // Fade out alert after 3 seconds
-    window.addEventListener('DOMContentLoaded', () => {
-        const alertBox = document.getElementById('alert-message');
-        if (alertBox) {
-            setTimeout(() => {
-                alertBox.style.transition = "opacity 0.8s ease";
-                alertBox.style.opacity = 0;
-
-                setTimeout(() => alertBox.remove(), 800); // remove from DOM
-            }, 3000); // 3 seconds delay
-        }
-    });
+  // Auto-hide alert message after 3 seconds
+  setTimeout(() => {
+    const alertBox = document.querySelector('.alert');
+    if (alertBox) {
+      alertBox.style.opacity = '0';
+      setTimeout(() => alertBox.style.display = 'none', 500);
+    }
+  }, 3000); // 3000ms = 3 seconds
 </script>
+
 
 
 </body>

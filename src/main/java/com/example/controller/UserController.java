@@ -1,13 +1,16 @@
 package com.example.controller;
 
 import java.security.Principal;
-import java.util.Base64;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,6 +127,11 @@ public class UserController {
 		return "user/profile";
 	}
 
+	@GetMapping("/settingpage")
+	public String openSettingsPage() {
+		return "user/settings";
+	}
+
 	@RequestMapping("/delete/{cid}")
 	@Transactional
 	public String deleteContact(@PathVariable("cid") Integer cid, HttpSession session, Principal principal) {
@@ -140,24 +148,46 @@ public class UserController {
 	}
 
 	@RequestMapping("/updatecontact/{cid}")
-	public String showUpdateForm(@PathVariable("cid") Integer cid, Model model) {
-		Contact contact = contactRepo.findById(cid).orElse(null);
+	public String showUpdateForm(@PathVariable("ciId") Integer cId, Model model) {
+		Contact contact = contactRepo.findById(cId).orElse(null);
 		model.addAttribute("contact", contact);
 		return "user/update";
 	}
 
 	@PostMapping("/update")
-	public String handleUpdateContact(@ModelAttribute Contact contact, @RequestParam("profileimage") MultipartFile file,
-			HttpSession session, Principal principal) {
-		try {
-			User user = userRepo.findByUserName(principal.getName());
-			contact.setUser(user);
+	public String handleUpdateContact(@ModelAttribute Contact updatedContact,
+			@RequestParam("profileimage") MultipartFile file, HttpSession session, Principal principal) {
 
-			if (!file.isEmpty()) {
-				contact.setImage(file.getBytes());
+		try {
+			Contact existingContact = contactRepo.findById(updatedContact.getcId()).orElse(null);
+
+			if (existingContact == null) {
+				session.setAttribute("message", new Message("Contact not found", "danger"));
+				return "redirect:/user/shows/0";
 			}
 
-			contactRepo.save(contact);
+			User user = userRepo.findByUserName(principal.getName());
+
+			// Check if this contact belongs to the current user
+			if (existingContact.getUser().getId() != user.getId()) {
+				session.setAttribute("message",
+						new Message("You don't have permission to update this contact", "danger"));
+				return "redirect:/user/shows/0";
+			}
+
+			// Update fields
+			existingContact.setUsername(updatedContact.getUsername());
+			existingContact.setLastname(updatedContact.getLastname());
+			existingContact.setJobTitle(updatedContact.getJobTitle());
+			existingContact.setEmail(updatedContact.getEmail());
+			existingContact.setPhone(updatedContact.getPhone());
+			existingContact.setAddress(updatedContact.getAddress());
+
+			if (!file.isEmpty()) {
+				existingContact.setImage(file.getBytes());
+			}
+
+			contactRepo.save(existingContact);
 			session.setAttribute("message", new Message("Contact updated successfully", "success"));
 		} catch (Exception e) {
 			session.setAttribute("message", new Message("Update failed", "danger"));
@@ -165,11 +195,6 @@ public class UserController {
 		}
 
 		return "redirect:/user/shows/0";
-	}
-
-	@GetMapping("/settingpage")
-	public String openSettingsPage() {
-		return "user/settings";
 	}
 
 	@PostMapping("/changepass")
@@ -186,16 +211,23 @@ public class UserController {
 			return "user/settings";
 		}
 
-		return "redirect:/user/index";
+		return "redirect:/user/settingpage";
 	}
 
 	@PostMapping("/update-profile")
 	public String updateUserProfile(@RequestParam("name") String name, @RequestParam("email") String email,
-			Principal principal, HttpSession session) {
+			@RequestParam("profileImage") MultipartFile file, Principal principal, HttpSession session) {
 		try {
 			User user = userRepo.findByUserName(principal.getName());
+
 			user.setName(name);
 			user.setEmail(email);
+
+			// Update image only if a new file is uploaded
+			if (!file.isEmpty()) {
+				user.setImage(file.getBytes());
+			}
+
 			userRepo.save(user);
 			session.setAttribute("message", new Message("Profile updated successfully", "success"));
 		} catch (Exception e) {
@@ -206,44 +238,19 @@ public class UserController {
 		return "redirect:/user/settingpage";
 	}
 
-	@GetMapping("/feedback")
-	public String feedbackForm(Model model) {
-		model.addAttribute("title", "Feedback");
-		return "user/feedback_form";
-	}
+	@GetMapping("/user/image/{id}")
+	@ResponseBody
+	public ResponseEntity<byte[]> getUserImage(@PathVariable("id") int id) {
+		Optional<User> userOpt = userRepo.findById(id);
+		if (userOpt.isPresent() && userOpt.get().getImage() != null) {
+			byte[] image = userOpt.get().getImage();
 
-	@PostMapping("/submit-feedback")
-	public String submitFeedback(@RequestParam("subject") String subject, @RequestParam("email") String email,
-			@RequestParam("message") String message, HttpSession session) {
-		try {
-			emailService.sendFeedbackEmail(subject, email, message);
-			session.setAttribute("message", new Message("Thank you for your feedback!", "alert-success"));
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.setAttribute("message", new Message("Feedback sending failed!", "alert-danger"));
-		}
-
-		return "redirect:/user/feedback";
-	}
-
-	@GetMapping("/user/profile")
-	public String showProfile(Model model, Principal principal) {
-		User user = userRepo.findByEmail(principal.getName());
-
-		if (user.getImage() != null) {
-			String base64Image = Base64.getEncoder().encodeToString(user.getImage());
-			model.addAttribute("imageBase64", base64Image);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_JPEG); // or MediaType.IMAGE_PNG
+			return new ResponseEntity<>(image, headers, HttpStatus.OK);
 		} else {
-			model.addAttribute("imageBase64", null);
+			return ResponseEntity.notFound().build();
 		}
-
-		model.addAttribute("user", user);
-		return "user/profile";
 	}
 
-	@GetMapping("/premium")
-	public String pirmiumPage(Model model) {
-				
-		return "user/premium";
-}
 }

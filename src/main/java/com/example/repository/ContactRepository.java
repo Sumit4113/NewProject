@@ -13,10 +13,10 @@ import com.example.entites.User;
 
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
 	// This is user for pegination..
-	@Query("from Contact as c where c.user.id =:userId")
+	@Query("from Contact as c where c.user.id =:id")
 	//current page-page
 	//contact per-page
-	public Page<Contact> findContactByUser(@Param("userId") int userId,Pageable pagePageable);
+	public Page<Contact> findContactByUser(@Param("id") int userId,Pageable pagePageable);
 
 	// search contact
 

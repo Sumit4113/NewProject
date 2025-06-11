@@ -9,45 +9,69 @@
 <body>
 	<section class="setting">
 		<div class="container">
+
 			<h2>⚙️ Settings</h2>
 
-			<!-- Flash Message -->
-			<div th:if="${session.message}">
-				<p th:text="${session.message.content}"
-					th:class="'alert alert-' + ${session.message.type}"></p>
+
+			<div>
+				<!-- Change Password Section -->
+				<div class="password section-card">
+					<h3>🔐 Change Password</h3>
+					<!-- Alert Message -->
+					<div id="alert-message" th:if="${session.message}" class="alert"
+						th:classappend="${'alert-' + session.message.type}">
+						<p th:text="${session.message.content}"></p>
+					</div>
+					<form th:action="@{/user/changepass}" method="post">
+						<label for="oldpass">Old Password</label> <input type="password"
+							name="oldpass" id="oldpass" required> <label
+							for="newpass">New Password</label> <input type="password"
+							name="newpass" id="newpass" required>
+
+						<button type="submit">Change Password</button>
+					</form>
+
+
+					<hr>
+
+					<!-- Update Profile Section -->
+					<div class="profileupdate section-card">
+						<h3>👤 Update Profile</h3>
+						<!-- Alert Message -->
+						<div id="alert-message" th:if="${session.message}" class="alert"
+							th:classappend="${'alert-' + session.message.type}">
+							<p th:text="${session.message.content}"></p>
+						</div>
+						<form th:action="@{/user/update-profile}" method="post"
+							enctype="multipart/form-data">
+							<img th:src="@{'/user/image/' + ${user.id}}"
+								alt="Profile Picture" class="profile-img" /> <label for="name">Name</label>
+							<input type="text" name="name" id="name" th:value="${user.name}"
+								required> <label for="email">Email</label> <input
+								type="email" name="email" id="email" th:value="${user.email}"
+								readonly>
+							<div class="form-group">
+								<label for="profileImage">Change Profile Image</label> <input
+									type="file" name="profileImage" id="profileImage"
+									accept="image/*">
+							</div>
+
+
+							<button type="submit">Update Profile</button>
+						</form>
+					</div>
+				</div>
 			</div>
-
-			<!-- Change Password Section -->
-			<div class="password section-card">
-				<h3>🔐 Change Password</h3>
-				<form th:action="@{/user/changepass}" method="post">
-					<label for="oldpass">Old Password</label> <input type="password"
-						name="oldpass" id="oldpass" required> <label for="newpass">New
-						Password</label> <input type="password" name="newpass" id="newpass"
-						required>
-
-					<button type="submit">Change Password</button>
-				</form>
-			</div>
-
-			<hr>
-
-			<!-- Update Profile Section -->
-			<div class="profileupdate section-card">
-				<h3>👤 Update Profile</h3>
-				<form th:action="@{/user/update-profile}" method="post"
-					enctype="multipart/form-data">
-					<img th:src="@{/user/profile-image}" alt="Profile Picture"
-						id="preview" class="profile-img" /> <label for="name">Name</label>
-					<input type="text" name="name" id="name" th:value="${user.name}"
-						required> <label for="email">Email</label> <input
-						type="email" name="email" id="email" th:value="${user.email}"
-						readonly>
-
-					<button type="submit">Update Profile</button>
-				</form>
-			</div>
-		</div>
 	</section>
+	<script>
+  // Auto-hide alert message after 3 seconds
+  setTimeout(() => {
+    const alertBox = document.querySelector('.alert');
+    if (alertBox) {
+      alertBox.style.opacity = '0';
+      setTimeout(() => alertBox.style.display = 'none', 500);
+    }
+  }, 3000); // 3000ms = 3 seconds
+</script>
 </body>
 </html>

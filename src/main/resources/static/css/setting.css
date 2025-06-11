@@ -2,23 +2,23 @@
 .setting {
 	padding: 2rem;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background-color: #fafafa;
+	background-color: #000000;
 	min-height: 50vh;
 }
 
 /* Center container with max width */
 .setting .container {
-	max-width: 800px;
+	max-width: 1000px;
 	margin: auto;
 	padding: 2rem;
-	background: #fff;
-	border-radius: 10px;
+	background: rgb(128, 128, 255); border-radius : 10px;
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
 }
 
 /* Main heading */
 .setting h2 {
-	font-size: 2rem;
+	font-size: 3rem;
 	margin-bottom: 1.5rem;
 	color: #222;
 	text-align: center;
@@ -51,7 +51,9 @@
 	border-radius: 8px;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 	margin-bottom: 2.5rem;
+	margin-top: 6.5rem;
 	
+	gap:5rem;
 }
 
 /* Section headings */

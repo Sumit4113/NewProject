@@ -17,10 +17,10 @@
 					<div class="card-icon icon-green">➕</div>
 					<h3 class="card-title">Contact Information</h3>
 				</div>
-				<!-- Session Message (outside the form) -->
-				<div th:if="${session.message}"
-					class="alert alert-[[${session.message.type}]]" role="alert">
-					<span th:text="${session.message.content}"></span>
+				<!-- Alert Message -->
+				<div id="alert-message" th:if="${session.message}" class="alert"
+					th:classappend="${'alert-' + session.message.type}">
+					<p th:text="${session.message.content}"></p>
 				</div>
 
 
@@ -28,16 +28,17 @@
 					enctype="multipart/form-data" method="post"
 					th:action="@{/user/update}">
 
-
+					<!-- Hidden field to pass the contact ID -->
+					<input type="hidden" th:field="*{cId}" />
 					<div class="form-row">
 						<div class="form-group">
 							<label class="form-label">First Name *</label> <input type="text"
-								class="form-input" th:value="${contact.username}"
+								class="form-input"  th:field="*{username}"
 								name="username" required placeholder="Enter first name">
 						</div>
 						<div class="form-group">
 							<label class="form-label">Last Name *</label> <input type="text"
-								class="form-input" th:value="${contact.lastname}" required
+								class="form-input"  th:field="*{lastname}" required
 								placeholder="Enter last name">
 						</div>
 					</div>
@@ -45,40 +46,33 @@
 					<div class="form-row">
 						<div class="form-group">
 							<label class="form-label">Email Address</label> <input
-								type="email" class="form-input" th:value="${contact.email}"
+								type="email" class="form-input"  th:field="*{email}"
 								placeholder="Enter email">
 						</div>
 						<div class="form-group">
 							<label class="form-label">Phone Number *</label> <input
-								type="tel" class="form-input" th:value="${contact.phone}"
+								type="tel" class="form-input"  th:field="*{phone}"
 								required placeholder="Enter phone">
 						</div>
 					</div>
 
 					<div class="form-row">
 						<div class="form-group">
-							<label class="form-label" for="image">Upload Image:</label> <input
-								class="form-input" type="file" id="image" name="profileimage">
+							<label for="profileimage">Change Profile Image</label> <input
+								type="file" name="profileimage" id="profileimage"
+								accept="image/*">
 						</div>
 						<div class="form-group">
 							<label class="form-label">Job Title</label> <input type="text"
-								class="form-input" th:value="${contact.jobTitle}"
+								class="form-input"  th:field="*{jobTitle}"
 								placeholder="Enter job title">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="form-label">Address</label> <input type="text"
-							class="form-input" th:value="${contact.address}"
+							class="form-input" th:field="*{address}"
 							placeholder="Enter address">
-					</div>
-
-
-
-					<div class="form-group">
-						<img th:if="${contact.image}"
-							th:src="@{'/image/' + ${contact.image}}" alt="Preview"
-							width="100px" />
 					</div>
 
 					<div style="display: flex; gap: 1rem;">
@@ -95,6 +89,16 @@
 
 	</section>
 
+	<script>
+  // Auto-hide alert message after 3 seconds
+  setTimeout(() => {
+    const alertBox = document.querySelector('.alert');
+    if (alertBox) {
+      alertBox.style.opacity = '0';
+      setTimeout(() => alertBox.style.display = 'none', 500);
+    }
+  }, 2000); // 2000ms = 2 seconds
+</script>
 
 
 

@@ -7,6 +7,10 @@ target/
 *.rar
 node_modules/
 
+# Ignore Firebase credentials and sensitive config
+firebase-security-config/
+*.json
+
 
 HELP.md
 target/

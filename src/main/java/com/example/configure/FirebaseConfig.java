@@ -14,14 +14,14 @@ import java.nio.charset.StandardCharsets;
 @Configuration
 public class FirebaseConfig {
 
-	@Value("${FIREBASE_CONFIG}")
+	@Value("${FIREBASE_CONFIGS}")
 	private String firebaseConfig;
 
 	@PostConstruct
 	public void init() {
 		try {
 			if (firebaseConfig == null || firebaseConfig.trim().isEmpty()) {
-				throw new IllegalStateException("FIREBASE_CONFIG ");
+				throw new IllegalStateException("FIREBASE_CONFIGS");
 			}
 
 			InputStream serviceAccount = new ByteArrayInputStream(firebaseConfig.getBytes(StandardCharsets.UTF_8));

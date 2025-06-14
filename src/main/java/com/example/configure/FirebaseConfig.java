@@ -1,6 +1,9 @@
 package com.example.configure;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -13,21 +16,22 @@ import jakarta.annotation.PostConstruct;
 @Configuration
 public class FirebaseConfig {
 
-    @PostConstruct
-    public void init() {
-        try {
-            FileInputStream serviceAccount = new FileInputStream("firebase-service-account.json");
+	@PostConstruct
+	public void init() {
+		try {
+			String firebaseJson = System.getenv("FIREBASE_CONFIG");
 
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
+			InputStream serviceAccount = new ByteArrayInputStream(firebaseJson.getBytes(StandardCharsets.UTF_8));
 
-            if (FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			FirebaseOptions options = new FirebaseOptions.Builder()
+					.setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
+
+			if (FirebaseApp.getApps().isEmpty()) {
+				FirebaseApp.initializeApp(options);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
-

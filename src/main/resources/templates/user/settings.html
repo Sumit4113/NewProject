@@ -44,12 +44,14 @@
 						</div>
 						<form th:action="@{/user/update-profile}" method="post"
 							enctype="multipart/form-data">
-							<img th:src="@{'/user/image/' + ${user.id}}"
-								alt="Profile Picture" class="profile-img" /> <label for="name">Name</label>
-							<input type="text" name="name" id="name" th:value="${user.name}"
-								required> <label for="email">Email</label> <input
-								type="email" name="email" id="email" th:value="${user.email}"
-								readonly>
+							<img
+								th:src="${user.imageUrl != null} ? ${user.imageUrl} : @{/images/default.png}"
+								alt="Profile Picture" class="rounded-circle img-thumbnail"
+								style="width: 150px; height: 150px; object-fit: cover;" /> <label
+								for="name">Name</label> <input type="text" name="name" id="name"
+								th:value="${user.name}" required> <label for="email">Email</label>
+							<input type="email" name="email" id="email"
+								th:value="${user.email}" readonly>
 							<div class="form-group">
 								<label for="profileImage">Change Profile Image</label> <input
 									type="file" name="profileImage" id="profileImage"

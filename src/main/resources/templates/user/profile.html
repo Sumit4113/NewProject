@@ -10,9 +10,11 @@
 		<div class="card shadow-lg mx-auto" style="max-width: 600px;">
 			<div class="card-body text-center">
 				<div class="mb-3">
-					<img th:src="@{'/user/image/' + ${user.id}}" alt="Profile Picture"
-						class="rounded-circle img-thumbnail"
-						style="width: 150px; height: 150px;" />
+					<img
+						th:src="${user.imageUrl != null} ? ${user.imageUrl} : @{/images/default.png}"
+						alt="Profile Picture" class="rounded-circle img-thumbnail"
+						style="width: 150px; height: 150px; object-fit: cover;" />
+
 				</div>
 				<h3 class="card-title" th:text="${user.name}">User Name</h3>
 				<p class="card-text text-muted">
@@ -28,10 +30,10 @@
 			</div>
 		</div>
 	</section>
-	
-	
-	
-	
+
+
+
+
 	<script>
   // Auto-hide alert message after 3 seconds
   setTimeout(() => {
@@ -42,7 +44,7 @@
     }
   }, 3000); // 3000ms = 3 seconds
 </script>
-	
+
 </body>
 
 </html>

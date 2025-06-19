@@ -24,11 +24,9 @@ public class User {
 	private String role;
 	private boolean enabled;
 
-	@Lob
-	@Column(length = 16777215)
-	private byte[] image;
+	private String imageUrl;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true ,fetch = FetchType.EAGER)
 	private List<Contact> contact = new ArrayList<>();
 
 	// Getters and setters...
@@ -88,12 +86,20 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public byte[] getImage() {
-		return image;
+	/**
+	 * @return the imageUrl
+	 */
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	/**
+	 * @param imageUrl the imageUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
+
+
 
 }

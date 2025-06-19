@@ -19,7 +19,7 @@
 }
 
 body {
-	background: linear-gradient( 180deg, silver, #fff);
+	background: linear-gradient(180deg, silver, #fff);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -166,6 +166,20 @@ body {
 			</p>
 		</div>
 	</div>
+
+	<script>
+    const imageInput = document.getElementById("image");
+    imageInput.addEventListener("change", function () {
+        const [file] = imageInput.files;
+        if (file) {
+            const preview = document.createElement("img");
+            preview.src = URL.createObjectURL(file);
+            preview.style.maxWidth = "100px";
+            preview.style.marginTop = "10px";
+            imageInput.parentElement.appendChild(preview);
+        }
+    });
+</script>
 
 </body>
 </html>

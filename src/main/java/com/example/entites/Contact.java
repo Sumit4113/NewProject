@@ -25,9 +25,8 @@ public class Contact {
 	private String phone;
 	private String jobTitle;
 	private String address;
-	@Lob
-	@Column(length = 16777215) // 16 MB max
-	private byte[] image;
+
+	private String imageUrl;
 
 	@ManyToOne
 	@JsonIgnore
@@ -47,19 +46,17 @@ public class Contact {
 	}
 
 	/**
-	 * @param image the image to set
+	 * @return the imageUrl
 	 */
-	public void setImage(byte[] image) {
-		this.image = image;
+	public String getImageUrl() {
+		return imageUrl;
 	}
-	
-	
 
 	/**
-	 * @return the image
+	 * @param imageUrl the imageUrl to set
 	 */
-	public byte[] getImage() {
-		return image;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	/**

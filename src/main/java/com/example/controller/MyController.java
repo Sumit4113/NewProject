@@ -23,11 +23,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import com.example.entites.User;
 import com.example.repository.UserRepository;
+import com.example.services.CloudinaryService;
 
 import org.springframework.ui.Model;
 
 @Controller
 public class MyController {
+	@Autowired
+	private CloudinaryService cloudinaryService;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -64,9 +67,10 @@ public class MyController {
 			user.setRole("ROLE_USER");
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-			// Save profile image if not empty
+			// ✅ Upload image to Firebase and save URL
 			if (!file.isEmpty()) {
-				user.setImage(file.getBytes());
+				String imageUrl = cloudinaryService.uploadFile(file);
+				user.setImageUrl(imageUrl);// ✅ Save image URL, not bytes
 			}
 
 			// Save user
@@ -91,20 +95,20 @@ public class MyController {
 		redirectAttributes.addFlashAttribute("error", "Invalid credentials");
 		return "login";
 	}
-	@GetMapping("/user/image/{id}")
-	@ResponseBody
-	public ResponseEntity<byte[]> getUserImage(@PathVariable("id") int id) {
-	    Optional<User> userOpt = userRepository.findById(id);
-	    if (userOpt.isPresent() && userOpt.get().getImage() != null) {
-	        byte[] image = userOpt.get().getImage();
 
-	        HttpHeaders headers = new HttpHeaders();
-	        headers.setContentType(MediaType.IMAGE_JPEG); // or MediaType.IMAGE_PNG
-	        return new ResponseEntity<>(image, headers, HttpStatus.OK);
-	    } else {
-	        return ResponseEntity.notFound().build();
-	    }
-	}
-
+//	@GetMapping("/user/image/{id}")
+//	@ResponseBody
+//	public ResponseEntity<byte[]> getUserImage(@PathVariable("id") int id) {
+//		Optional<User> userOpt = userRepository.findById(id);
+//		if (userOpt.isPresent() && userOpt.get().getImage() != null) {
+//			byte[] image = userOpt.get().getImage();
+//
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.setContentType(MediaType.IMAGE_JPEG); // or MediaType.IMAGE_PNG
+//			return new ResponseEntity<>(image, headers, HttpStatus.OK);
+//		} else {
+//			return ResponseEntity.notFound().build();
+//		}
+//	}
 
 }

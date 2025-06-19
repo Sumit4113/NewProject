@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.security.Principal;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.example.entites.User;
 import com.example.helper.Message;
 import com.example.repository.ContactRepository;
 import com.example.repository.UserRepository;
+import com.example.services.CloudinaryService;
 import com.example.services.EmailService;
 
 import jakarta.servlet.http.HttpSession;
@@ -41,7 +43,7 @@ public class UserController {
 	private ContactRepository contactRepo;
 
 	@Autowired
-	private EmailService emailService;
+	private CloudinaryService cloudinaryService;
 
 	// Common method to add user object to all responses
 	@ModelAttribute
@@ -66,13 +68,16 @@ public class UserController {
 	}
 
 	@PostMapping("/add_contact")
-	public String handleAddContact(Contact contact, @RequestParam("profileimage") MultipartFile file,
+	public String handleAddContact(Contact contact, @RequestParam("profileimage") MultipartFile files,
 			Principal principal, HttpSession session) {
 		try {
 			User user = userRepo.findByUserName(principal.getName());
 
-			if (!file.isEmpty()) {
-				contact.setImage(file.getBytes());
+			if (!files.isEmpty()) {
+				String imageUrl = cloudinaryService.uploadFile(files); // ✅ Upload to cloudinary
+				contact.setImageUrl(imageUrl); // ✅ Set it to the contact
+			} else {
+				contact.setImageUrl("/images/default.png"); // Optional: default image
 			}
 
 			contact.setUser(user);
@@ -156,7 +161,7 @@ public class UserController {
 
 	@PostMapping("/update")
 	public String handleUpdateContact(@ModelAttribute Contact updatedContact,
-			@RequestParam("profileimage") MultipartFile file, HttpSession session, Principal principal) {
+			@RequestParam("profileimage") MultipartFile files, HttpSession session, Principal principal) {
 
 		try {
 			Contact existingContact = contactRepo.findById(updatedContact.getcId()).orElse(null);
@@ -183,10 +188,13 @@ public class UserController {
 			existingContact.setPhone(updatedContact.getPhone());
 			existingContact.setAddress(updatedContact.getAddress());
 
-			if (!file.isEmpty()) {
-				existingContact.setImage(file.getBytes());
+			if (!files.isEmpty()) {
+				String imageUrl = cloudinaryService.uploadFile(files); // ✅ Upload to cloudinary
+				existingContact.setImageUrl(imageUrl); // ✅ Set it to the contact
+			} else {
+				existingContact.setImageUrl("/images/default.png"); // Optional: default image
 			}
-
+			
 			contactRepo.save(existingContact);
 			session.setAttribute("message", new Message("Contact updated successfully", "success"));
 		} catch (Exception e) {
@@ -225,7 +233,9 @@ public class UserController {
 
 			// Update image only if a new file is uploaded
 			if (!file.isEmpty()) {
-				user.setImage(file.getBytes());
+				String imageUrl = cloudinaryService.uploadFile(file);
+				user.setImageUrl(imageUrl);
+
 			}
 
 			userRepo.save(user);
@@ -238,19 +248,19 @@ public class UserController {
 		return "redirect:/user/settingpage";
 	}
 
-	@GetMapping("/user/image/{id}")
-	@ResponseBody
-	public ResponseEntity<byte[]> getUserImage(@PathVariable("id") int id) {
-		Optional<User> userOpt = userRepo.findById(id);
-		if (userOpt.isPresent() && userOpt.get().getImage() != null) {
-			byte[] image = userOpt.get().getImage();
-
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.IMAGE_JPEG); // or MediaType.IMAGE_PNG
-			return new ResponseEntity<>(image, headers, HttpStatus.OK);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
+//	@GetMapping("/user/image/{id}")
+//	@ResponseBody
+//	public ResponseEntity<byte[]> getUserImage(@PathVariable("id") int id) {
+//		Optional<User> userOpt = userRepo.findById(id);
+//		if (userOpt.isPresent() && userOpt.get().getImage() != null) {
+//			byte[] image = userOpt.get().getImage();
+//
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.setContentType(MediaType.IMAGE_JPEG); // or MediaType.IMAGE_PNG
+//			return new ResponseEntity<>(image, headers, HttpStatus.OK);
+//		} else {
+//			return ResponseEntity.notFound().build();
+//		}
+//	}
 
 }

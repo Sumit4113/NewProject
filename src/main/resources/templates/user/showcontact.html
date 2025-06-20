@@ -3,116 +3,134 @@
 	th:replace="user/base::layout(~{::section})">
 <head>
 <meta charset="UTF-8">
-<title>Show Contact</title>
+<title>Contact Management System</title>
+<link rel="stylesheet" th:href="@{/css/your-style.css}" />
 </head>
+
 <body>
 
+	<section class="showcontactpage">
 
+		<div class="containers">
+			<header class="headers">
+				<h1>Your Contact</h1>
 
-	<section class="showcontacts">
-		<div class="card ml-3">
-			<div class="card-body">
-				<div id="alert-message" th:if="${session.message}" class="alert"
-					th:classappend="${'alert-' + session.message.type}">
-					<p th:text="${session.message.content}"></p>
+			</header>
+
+			<section class="search-section">
+				<input type="text" class="search-bar" id="searchInput"
+					placeholder="Search contacts by name, email, or phone..."
+					onkeyup="performSearch()" th:value="${searchQuery}" /> <a
+					th:href="@{/user/addcontacts}">
+					<button class="add-contact-btn">+ Add New Contact</button>
+				</a>
+				<!-- message.html -->
+				<div th:if="${message}" class="alert "
+					th:classappend="'alert-' + ${message.type}" role="alert">
+					<span th:text="${message.content}"></span>
 				</div>
-
-				<h1 class="text-center">Your Contacts</h1>
-
-				<div class="search-bar">
-					<input onkeyup="search()" id="search-input " type="text"
-						placeholder="Search...">
-					<button>Search</button>
-				</div>
-
-				<table class="table mt-5">
-					<thead>
-						<tr>
-							<th scope="col">Image</th>
-							<th scope="col">Name</th>
-							<th scope="col">LastName</th>
-							<th scope="col">Email</th>
-							<th scope="col">phone</th>
-							<th scope="col">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="c : ${contacts}">
-							
-							<td><img
-								th:src="${c.imageUrl != null} ? ${c.imageUrl} : @{/images/default.png}"
-								alt="Contact Image"
-								style="width: 50px; height: 50px; border-radius: 10px;" /></td>
-							<td><span th:text="${c.username}"></span></td>
-
-							<td th:text="${c.lastName}"></td>
-
-							<td><a href="#" th:href="@{'/user/'+${c.cId}+'/contact/'}">
-									<span th:text="${c.email}"></span>
-							</a></td>
+			</section>
 
 
-							<td th:text="${c.phone}"></td>
-
-							<td>
-								<form th:action="@{'/user/delete/'+${c.cId}}" method="post"
-									onsubmit="return confirm('Are you sure you want to delete this contact?');">
+			<div class="contents">
+				<div class="contacts-grids">
+					<div class="contact-cards" th:each="contact : ${contacts}">
+						<img
+							th:src="${contact.imageUrl != null} ? ${contact.imageUrl} : @{/images/default.png}"
+							alt="Contact Image" class="contact-images" />
+						<div class="contact-info">
+							<h3 th:text="${contact.username}">Name</h3>
+							<div class="contact-details">
+								<strong>Last Name:</strong> <span th:text="${contact.lastName}"></span>
+							</div>
+							<div class="contact-details">
+								<strong>Email:</strong> <a
+									th:href="@{'#modal' + ${contact.cId}}" class="contact-emails"
+									th:text="${contact.email}">Email</a>
+							</div>
+							<div class="contact-details">
+								<strong>Phone:</strong> <span th:text="${contact.phone}"></span>
+							</div>
+							<div class="contact-actions">
+								<form th:action="@{'/user/updatecontact/' + ${contact.cId}}"
+									method="get">
+									<button class="btn btn-update" type="submit">Update</button>
+								</form>
+								<form th:action="@{'/user/delete/' + ${contact.cId}}"
+									method="post" onsubmit="return confirm('Are you sure?');">
 									<input type="hidden" name="_method" value="delete" />
-									<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+									<button class="btn btn-delete" type="submit">Delete</button>
 								</form>
-								<form th:action="@{'/user/updatecontact/'+${c.cId}}"
-									class="mt-2">
-									<button class="btn btn-primary btn-sm">Update</button>
-								</form>
-							</td>
-						</tr>
-
-					</tbody>
-				</table>
-				<nav class="body-center" aria-label="Page navigation example">
-					<ul class="pagination">
-						<!-- Previous button -->
-						<li th:if="${currentPage != null and currentPage > 0}"
-							class="page-item"><a
-							th:href="@{'/user/shows/' + ${currentPage - 1}}"
-							class="page-link">Previous</a></li>
-
-						<!-- Page numbers -->
-						<li th:each="i : ${#numbers.sequence(1, totalPages)}"
-							th:classappend="${currentPage == i - 1} ? 'active' : ''"
-							class="page-item"><a th:href="@{'/user/shows/' + ${i - 1}}"
-							class="page-link"> <span th:text="${i}"></span>
-						</a></li>
-
-						<!-- Next button -->
-						<li
-							th:if="${currentPage != null and currentPage + 1 < totalPages}"
-							class="page-item"><a
-							th:href="@{'/user/shows/' + ${currentPage + 1}}"
-							class="page-link">Next</a></li>
-					</ul>
-				</nav>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+		</div>
 
 
+		<!-- Pagination -->
+		<nav class="body-center" aria-label="Page navigation example">
+			<ul class="pagination">
+				<!-- Previous button -->
+				<li th:if="${currentPage != null and currentPage > 0}"
+					class="page-item"><a
+					th:href="@{'/user/shows/' + ${currentPage - 1}}" class="page-link">Previous</a>
+				</li>
+
+				<!-- Page numbers -->
+				<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+					th:classappend="${currentPage == i - 1} ? 'active' : ''"
+					class="page-item"><a th:href="@{'/user/shows/' + ${i - 1}}"
+					class="page-link" th:text="${i}"></a></li>
+
+				<!-- Next button -->
+				<li th:if="${currentPage != null and currentPage + 1 < totalPages}"
+					class="page-item"><a
+					th:href="@{'/user/shows/' + ${currentPage + 1}}" class="page-link">Next</a>
+				</li>
+			</ul>
+		</nav>
+
+
+
+
+		<!-- Contact Detail Modals -->
+		<div th:each="contact : ${contacts}" th:id="'modal' + ${contact.cId}"
+			class="modal">
+			<div class="modal-content">
+				<a href="#" class="close-modal">&times;</a> <img
+					th:src="${contact.imageUrl != null} ? ${contact.imageUrl} : @{/images/default.png}"
+					alt="Contact Image" class="detail-image" />
+				<div class="detail-info">
+					<h2 th:text="${contact.username}"></h2>
+					<div class="detail-item">
+						<span class="detail-label">Full Name:</span> <span
+							th:text="${contact.username + ' ' + contact.lastName}"></span>
+					</div>
+					<div class="detail-item">
+						<span class="detail-label">Email:</span> <span
+							th:text="${contact.email}"></span>
+					</div>
+					<div class="detail-item">
+						<span class="detail-label">Phone:</span> <span
+							th:text="${contact.phone}"></span>
+					</div>
+					<div class="detail-item">
+						<span class="detail-label">Address:</span> <span
+							th:text="${contact.address}">N/A</span>
+					</div>
+					<div class="detail-item">
+						<span class="detail-label">Job Or Company:</span> <span
+							th:text="${contact.jobTitle}">N/A</span>
+					</div>
+
+				</div>
+			</div>
 		</div>
 
 
 
-
 	</section>
-	<script>
-  // Auto-hide alert message after 3 seconds
-  setTimeout(() => {
-    const alertBox = document.querySelector('.alert');
-    if (alertBox) {
-      alertBox.style.opacity = '0';
-      setTimeout(() => alertBox.style.display = 'none', 500);
-    }
-  }, 3000); // 3000ms = 3 seconds
-</script>
-
-
-
 </body>
 </html>

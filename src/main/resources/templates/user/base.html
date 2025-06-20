@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Manager</title>
 <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-<link rel="stylesheet" th:href="@{/css/showcontacts.css}" />
+<link rel="stylesheet" th:href="@{/css/showstyle.css}" />
 <link rel="stylesheet" th:href="@{/css/setting.css}" />
 <link rel="stylesheet" th:href="@{/css/premium.css}" />
 <link rel="stylesheet"
@@ -32,11 +32,7 @@
 						Dashboard
 					</a>
 				</div>
-				<div class="nav-item">
-					<a th:href="@{/user/profile}" class="nav-link"
-						data-section="profile"> <i class="fas fa-user"></i> My Profile
-					</a>
-				</div>
+
 				<div class="nav-item">
 					<a th:href="@{/user/shows/0}" class="nav-link"
 						data-section="contacts"> <i class="fas fa-address-book"></i>
@@ -49,14 +45,10 @@
 						Add Contact
 					</a>
 				</div>
-				<div class="nav-item">
-					<a href="#" class="nav-link" data-section="groups"> <i
-						class="fas fa-users"></i> Groups <span class="premium-badge">PRO</span>
-					</a>
-				</div>
+
 
 				<div class="nav-item">
-					<a th:href="@{/user/premium}" class="nav-link"
+					<a th:href="@{/user/premiums}" class="nav-link"
 						data-section="premium"> <i class="fas fa-crown"></i> Premium
 						Features
 					</a>
@@ -80,14 +72,16 @@
 			<header class="header">
 				<button class="menu-toggle" id="menuToggle">☰</button>
 				<div class="header-actions">
-					<button class="btn btn-outline">
-						<span>🔍</span> Search
-					</button>
-					<button class="btn btn-primary">
-						<span>➕</span> Quick Add
-					</button>
+					<form th:action="@{/search}" method="get" class="search-form">
+						<input type="text" name="query" placeholder="Search books..."
+							required>
+						<button type="submit" class="btn btn-outline">
+							<span>🔍</span> Search
+						</button>
+					</form>
 				</div>
 			</header>
+
 
 
 			<div class="content">

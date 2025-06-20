@@ -1,22 +1,16 @@
-/* Container for settings page */
+/* ========== BASE STYLES ========== */
 .setting {
 	padding: 2rem;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background-color: #000000;
 	min-height: 50vh;
-}
-
-/* Center container with max width */
-.setting .container {
-	max-width: 1000px;
+	max-width: 700px;
 	margin: auto;
-	padding: 2rem;
-	background: rgb(128, 128, 255); border-radius : 10px;
-	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+	background: #fff;
 	border-radius: 10px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Main heading */
+/* Heading */
 .setting h2 {
 	font-size: 3rem;
 	margin-bottom: 1.5rem;
@@ -24,7 +18,6 @@
 	text-align: center;
 }
 
-/* Flash message styling */
 .setting .alert {
 	padding: 0.8rem 1rem;
 	margin-bottom: 1.5rem;
@@ -44,39 +37,35 @@
 	border: 1px solid #f5c6cb;
 }
 
-/* Section card styling to visually separate sections */
+/* Section Card */
 .section-card {
 	background-color: #fefefe;
 	padding: 2rem;
 	border-radius: 8px;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-	margin-bottom: 2.5rem;
-	margin-top: 6.5rem;
-	
-	gap:5rem;
+	margin: 2rem 0;
 }
 
-/* Section headings */
+/* Subheading */
 .setting h3 {
 	font-size: 1.4rem;
 	color: #333;
 	margin-bottom: 1.5rem;
 }
-/* Form styling */
+
+/* Form and Fields */
 .setting form {
 	display: flex;
 	flex-direction: column;
 	gap: 1.8rem;
 }
 
-/* Labels */
 .setting label {
 	font-weight: 600;
 	color: #444;
 	margin-bottom: 0.4rem;
 }
 
-/* Inputs */
 .setting input[type="text"], .setting input[type="email"], .setting input[type="password"]
 	{
 	padding: 0.7rem 1rem;
@@ -95,7 +84,7 @@
 	background-color: #fcfcfc;
 }
 
-/* Profile image styling */
+/* Profile Image */
 .profile-img {
 	width: 120px;
 	height: 120px;
@@ -124,40 +113,26 @@
 	background-color: #2c80b4;
 }
 
-/* Horizontal rule */
 .setting hr {
 	border: none;
 	border-top: 1px solid #eee;
 	margin: 2rem 0;
 }
 
-/* Responsive adjustments */
-@media ( max-width : 600px) {
-	.setting .container {
-		padding: 1.5rem;
-	}
-	.setting h2 {
-		font-size: 1.5rem;
-	}
-	.setting h3 {
-		font-size: 1.2rem;
-	}
-	.profile-img {
-		width: 100px;
-		height: 100px;
-	}
-	.setting button {
-		width: 100%;
-		text-align: center;
-	}
-}
-
-/* Scope all styles under `.user-profile` to prevent global impact */
 .user-profile {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	background-color: #f4f6f9;
-	padding: 2rem 28rem;
-	padding-bottom: 20%;
+	width: 60%; /* Set a fixed width */
+	height: 100%; /* Set the same height */
+	border-radius: 60%; /* Make it circular */
+	overflow: hidden; /* Hide overflow content */
+	margin: auto; /* Center horizontally */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	/* Background Image */
+	background-color:silver;
+	
 }
 
 .user-profile .card {
@@ -166,6 +141,8 @@
 	border-radius: 1.25rem;
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	margin: auto;
+	max-width: 600px;
 }
 
 .user-profile .card:hover {
@@ -175,6 +152,7 @@
 
 .user-profile .card-body {
 	padding: 2rem;
+	text-align: center;
 }
 
 .user-profile .img-thumbnail {
@@ -183,6 +161,8 @@
 	padding: 4px;
 	background-color: #fff;
 	object-fit: cover;
+	width: 150px;
+	height: 150px;
 }
 
 .user-profile .card-title {
@@ -201,15 +181,61 @@
 	color: #007bff;
 }
 
-@media ( max-width : 576px) {
-	.user-profile .card-title {
-		font-size: 1.5rem;
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Tablets and below */
+@media ( max-width : 768px) {
+	.setting {
+		padding: 1.5rem;
+	}
+	.setting h2 {
+		font-size: 2.2rem;
+	}
+	.setting h3 {
+		font-size: 1.2rem;
+	}
+}
+
+/* Phones (like Galaxy A51) */
+@media ( max-width : 480px) {
+	.setting {
+		padding: 1rem;
+	}
+	.setting h2 {
+		font-size: 1.8rem;
+	}
+	.setting h3 {
+		font-size: 1rem;
+	}
+	.profile-img {
+		width: 90px;
+		height: 90px;
+	}
+	.setting button {
+		width: 100%;
+		text-align: center;
 	}
 	.user-profile .img-thumbnail {
-		width: 120px !important;
-		height: 120px !important;
+		width: 100px;
+		height: 100px;
+	}
+	.user-profile .card-title {
+		font-size: 1.4rem;
 	}
 	.user-profile .card-body {
-		padding: 1.5rem 1rem;
+		padding: 1rem;
+	}
+}
+
+/* Extra-small devices */
+@media ( max-width : 360px) {
+	.setting h2 {
+		font-size: 1.5rem;
+	}
+	.setting h3 {
+		font-size: 0.95rem;
+	}
+	.setting input, .setting button {
+		font-size: 0.95rem;
 	}
 }

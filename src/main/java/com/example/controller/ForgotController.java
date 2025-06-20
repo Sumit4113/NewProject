@@ -89,7 +89,7 @@ public class ForgotController {
 		this.userrepo.save(user);
 
 		redirectAttributes.addFlashAttribute("message", "Password changed successfully. You can now login.");
-		return "redirect:/login";
+		return "redirect:/loginPage";
 
 	}
 

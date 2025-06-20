@@ -142,16 +142,15 @@ nav {
 }
 
 .hero-image {
+	background: transparent;
 	margin-top: 3rem;
 	animation: fadeInUp 1s ease 0.6s both;
 }
 
 .hero-image img {
-	max-width: 500px;
-	width: 100%;
-	height: auto;
-	border-radius: 15px;
-	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+	width: 100px;
+	height: 100px;
+	
 }
 
 .features-list {
@@ -181,7 +180,7 @@ nav {
 /* About Section */
 .about {
 	padding: 80px 0;
-	background: #f8f9fa;
+	background: #fff;
 }
 
 .container {
@@ -266,9 +265,11 @@ nav {
 .auth-section {
 	padding: 80px 0;
 	background: white;
+	
 }
 
 .auth-container {
+	margin-top: 100px;
 	display: flex;
 	justify-content: center;
 	gap: 2rem;
@@ -500,57 +501,12 @@ to {
 }
 
 /* Responsive Design */
-@media ( max-width : 768px) {
-	.nav-links {
-		display: none;
-	}
-	.hero h1 {
-		font-size: 2.5rem;
-	}
-	.hero p {
-		font-size: 1rem;
-	}
-	.about-content, .contact-content {
-		grid-template-columns: 1fr;
-		gap: 2rem;
-	}
-	.auth-container {
-		flex-direction: column;
-		align-items: center;
-	}
-	.section-title {
-		font-size: 2rem;
-	}
-	nav {
-		padding: 0 1rem;
-	}
-	.container {
-		padding: 0 1rem;
-	}
-}
-
-@media ( max-width : 480px) {
-	.hero {
-		padding: 100px 0 60px;
-	}
-	.hero h1 {
-		font-size: 2rem;
-	}
-	.about, .auth-section, .contact {
-		padding: 60px 0;
-	}
-	.auth-card {
-		width: 100%;
-		max-width: 300px;
-	}
-}
-
-/* Smooth scrolling */
+/* Base Smooth Scroll */
 html {
 	scroll-behavior: smooth;
 }
 
-/* Intersection Observer Animation */
+/* Scroll Animation */
 .animate-on-scroll {
 	opacity: 0;
 	transform: translateY(30px);
@@ -560,4 +516,73 @@ html {
 .animate-on-scroll.animated {
 	opacity: 1;
 	transform: translateY(0);
+}
+
+/* Medium Devices - Tablets & Phones Landscape */
+@media (max-width: 768px) {
+	.nav-links {
+		display: none;
+	}
+	.hero h1 {
+		font-size: 2.2rem;
+	}
+	.hero p {
+		font-size: 1rem;
+	}
+	.about-content,
+	.contact-content {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+	.auth-container {
+		flex-direction: column;
+		align-items: center;
+	}
+	.section-title {
+		font-size: 1.8rem;
+	}
+	nav, .container {
+		padding: 0 1rem;
+	}
+}
+
+/* Small Devices - Phones (like Galaxy A51, 412px wide) */
+@media (max-width: 480px) {
+	.hero {
+		padding: 80px 0 40px;
+		text-align: center;
+	}
+	.hero h1 {
+		font-size: 1.8rem;
+	}
+	.hero p {
+		font-size: 0.95rem;
+		padding: 0 1rem;
+	}
+	.about,
+	.auth-section,
+	.contact {
+		padding: 50px 0;
+	}
+	.auth-card {
+		width: 90%;
+		max-width: 300px;
+	}
+	.section-title {
+		font-size: 1.6rem;
+		text-align: center;
+	}
+}
+
+/* Extra-Small Devices - Old phones or very narrow screens */
+@media (max-width: 360px) {
+	.hero h1 {
+		font-size: 1.6rem;
+	}
+	.hero p {
+		font-size: 0.85rem;
+	}
+	.section-title {
+		font-size: 1.4rem;
+	}
 }

@@ -374,37 +374,10 @@ body {
 	border-radius: 8px;
 }
 
-/* Stats */
-.stats-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-	gap: 1rem;
-	margin-bottom: 2rem;
-}
-
-.stat-card {
-	background: rgba(255, 255, 255, 0.95);
-	border-radius: 12px;
-	padding: 1.5rem;
-	text-align: center;
-}
-
-.stat-number {
-	font-size: 2rem;
-	font-weight: bold;
-	color: #667eea;
-	margin-bottom: 0.5rem;
-}
-
-.stat-label {
-	color: #666;
-	font-size: 0.9rem;
-}
-
 /* Responsive Design */
 @media ( max-width : 768px) {
 	.sidebar {
-		width: 100%;
+		width: 50%;
 	}
 	.main-content.sidebar-open {
 		margin-left: 0;
@@ -422,7 +395,7 @@ body {
 		grid-template-columns: 1fr;
 	}
 	.contact-list {
-		grid-template-columns: 1fr;
+		grid-template-columns: 10fr;
 	}
 	.stats-grid {
 		grid-template-columns: repeat(2, 1fr);

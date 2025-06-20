@@ -1,35 +1,39 @@
-
-
-.premium-wrapper {
+.premium-wrappers {
 	padding: 2rem 1rem;
 	max-width: 1200px;
 	margin: auto;
 	font-family: 'Segoe UI', sans-serif;
 	background-color: #f7f9fb;
-	color: #333;
 }
 
-.premium-wrapper .title {
+.premium-Wrappers .containers {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	background:gray;
+}
+
+.premium-wrappers .title {
 	text-align: center;
 	font-size: 2.5rem;
 	color: #2c3e50;
 	margin-bottom: 0.5rem;
 }
 
-.premium-wrapper .subtitle {
+.premium-wrappers .subtitle {
 	text-align: center;
 	font-size: 1.1rem;
 	color: #555;
 	margin-bottom: 2.5rem;
 }
 
-.premium-wrapper .features-grid {
+.premium-wrappers .features-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	gap: 1.5rem;
 }
 
-.premium-wrapper .feature-card {
+.premium-wrappers .feature-card {
 	background: #fff;
 	padding: 1.5rem;
 	border-radius: 12px;
@@ -38,26 +42,26 @@
 	transition: transform 0.3s ease;
 }
 
-.premium-wrapper .feature-card:hover {
+.premium-wrappers .feature-card:hover {
 	transform: translateY(-6px);
 }
 
-.premium-wrapper .feature-card .icon {
+.premium-wrappers .feature-card .icon {
 	font-size: 2rem;
 	margin-bottom: 0.5rem;
 }
 
-.premium-wrapper .feature-card h3 {
+.premium-wrappers .feature-card h3 {
 	margin-bottom: 0.5rem;
 	color: #007bff;
 }
 
-.premium-wrapper .cta {
+.premium-wrappers .cta {
 	text-align: center;
 	margin-top: 3rem;
 }
 
-.premium-wrapper .btn-upgrade {
+.premium-wrappers .btn-upgrade {
 	background-color: #007bff;
 	color: #fff;
 	font-size: 1.1rem;
@@ -68,11 +72,11 @@
 	transition: background-color 0.3s ease;
 }
 
-.premium-wrapper .btn-upgrade:hover {
+.premium-wrappers .btn-upgrade:hover {
 	background-color: #0056b3;
 }
 
-.premium-wrapper .note {
+.premium-wrappers .note {
 	margin-top: 1rem;
 	color: #777;
 	font-size: 0.95rem;

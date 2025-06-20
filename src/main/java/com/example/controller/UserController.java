@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.entites.Contact;
 import com.example.entites.User;
@@ -69,7 +70,7 @@ public class UserController {
 
 	@PostMapping("/add_contact")
 	public String handleAddContact(Contact contact, @RequestParam("profileimage") MultipartFile files,
-			Principal principal, HttpSession session) {
+			Principal principal, RedirectAttributes redirectAttributes) {
 		try {
 			User user = userRepo.findByUserName(principal.getName());
 
@@ -84,13 +85,13 @@ public class UserController {
 			user.getContact().add(contact);
 			userRepo.save(user);
 
-			session.setAttribute("message", new Message("Your contact is added!", "success"));
+			redirectAttributes.addFlashAttribute("message", new Message("Your contact is added!", "success"));
 		} catch (Exception e) {
 			e.printStackTrace();
-			session.setAttribute("message", new Message("Something went wrong!", "danger"));
+			redirectAttributes.addFlashAttribute("message", new Message("Something went wrong!", "danger"));
 		}
 
-		return "user/addcontact";
+		return "redirect:/user/addcontacts";
 	}
 
 	@GetMapping("/shows")
@@ -139,14 +140,15 @@ public class UserController {
 
 	@RequestMapping("/delete/{cid}")
 	@Transactional
-	public String deleteContact(@PathVariable("cid") Integer cid, HttpSession session, Principal principal) {
+	public String deleteContact(@PathVariable("cid") Integer cid, RedirectAttributes redirectAttributes,
+			Principal principal) {
 		Contact contact = contactRepo.findById(cid).orElse(null);
 
 		if (contact != null) {
 			User user = userRepo.findByUserName(principal.getName());
 			user.getContact().remove(contact);
 			userRepo.save(user);
-			session.setAttribute("message", new Message("Contact deleted successfully", "success"));
+			redirectAttributes.addFlashAttribute("message", new Message("Contact deleted successfully", "success"));
 		}
 
 		return "redirect:/user/shows/0";
@@ -161,13 +163,14 @@ public class UserController {
 
 	@PostMapping("/update")
 	public String handleUpdateContact(@ModelAttribute Contact updatedContact,
-			@RequestParam("profileimage") MultipartFile files, HttpSession session, Principal principal) {
+			@RequestParam("profileimage") MultipartFile files, RedirectAttributes redirectAttributes,
+			Principal principal) {
 
 		try {
 			Contact existingContact = contactRepo.findById(updatedContact.getcId()).orElse(null);
 
 			if (existingContact == null) {
-				session.setAttribute("message", new Message("Contact not found", "danger"));
+				redirectAttributes.addFlashAttribute("message", new Message("Contact not found", "danger"));
 				return "redirect:/user/shows/0";
 			}
 
@@ -175,7 +178,7 @@ public class UserController {
 
 			// Check if this contact belongs to the current user
 			if (existingContact.getUser().getId() != user.getId()) {
-				session.setAttribute("message",
+				redirectAttributes.addFlashAttribute("message",
 						new Message("You don't have permission to update this contact", "danger"));
 				return "redirect:/user/shows/0";
 			}
@@ -194,11 +197,11 @@ public class UserController {
 			} else {
 				existingContact.setImageUrl("/images/default.png"); // Optional: default image
 			}
-			
+
 			contactRepo.save(existingContact);
-			session.setAttribute("message", new Message("Contact updated successfully", "success"));
+			redirectAttributes.addFlashAttribute("message", new Message("Contact updated successfully", "success"));
 		} catch (Exception e) {
-			session.setAttribute("message", new Message("Update failed", "danger"));
+			redirectAttributes.addFlashAttribute("message", new Message("Update failed", "danger"));
 			e.printStackTrace();
 		}
 
@@ -207,15 +210,15 @@ public class UserController {
 
 	@PostMapping("/changepass")
 	public String changePassword(@RequestParam("oldpass") String oldPass, @RequestParam("newpass") String newPass,
-			HttpSession session, Principal principal) {
+			RedirectAttributes redirectAttributes, Principal principal) {
 		User user = userRepo.findByUserName(principal.getName());
 
 		if (passwordencoder.matches(oldPass, user.getPassword())) {
 			user.setPassword(passwordencoder.encode(newPass));
 			userRepo.save(user);
-			session.setAttribute("message", new Message("Password changed successfully", "success"));
+			redirectAttributes.addFlashAttribute("message", new Message("Password changed successfully", "success"));
 		} else {
-			session.setAttribute("message", new Message("Incorrect old password", "danger"));
+			redirectAttributes.addFlashAttribute("message", new Message("Incorrect old password", "danger"));
 			return "user/settings";
 		}
 
@@ -224,7 +227,8 @@ public class UserController {
 
 	@PostMapping("/update-profile")
 	public String updateUserProfile(@RequestParam("name") String name, @RequestParam("email") String email,
-			@RequestParam("profileImage") MultipartFile file, Principal principal, HttpSession session) {
+			@RequestParam("profileImage") MultipartFile file, Principal principal,
+			RedirectAttributes redirectAttributes) {
 		try {
 			User user = userRepo.findByUserName(principal.getName());
 
@@ -239,10 +243,10 @@ public class UserController {
 			}
 
 			userRepo.save(user);
-			session.setAttribute("message", new Message("Profile updated successfully", "success"));
+			redirectAttributes.addFlashAttribute("message", new Message("Profile updated successfully", "success"));
 		} catch (Exception e) {
 			e.printStackTrace();
-			session.setAttribute("message", new Message("Failed to update profile", "danger"));
+			redirectAttributes.addFlashAttribute("message", new Message("Failed to update profile", "danger"));
 		}
 
 		return "redirect:/user/settingpage";
@@ -263,4 +267,10 @@ public class UserController {
 //		}
 //	}
 
+	@GetMapping("/premiums")
+	public String premium() {
+		
+		return "user/premium";
+	}
+	
 }

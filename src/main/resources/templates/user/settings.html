@@ -8,62 +8,63 @@
 </head>
 <body>
 	<section class="setting">
-		<div class="container">
-
-			<h2>⚙️ Settings</h2>
 
 
-			<div>
-				<!-- Change Password Section -->
-				<div class="password section-card">
-					<h3>🔐 Change Password</h3>
-					<!-- Alert Message -->
-					<div id="alert-message" th:if="${session.message}" class="alert"
-						th:classappend="${'alert-' + session.message.type}">
-						<p th:text="${session.message.content}"></p>
+		<h2>⚙️ Settings</h2>
+
+
+		<div>
+			<!-- Change Password Section -->
+			<div class="password section-card">
+				<h3>🔐 Change Password</h3>
+				<!-- message.html -->
+				<div th:if="${message}" class="alert "
+					th:classappend="'alert-' + ${message.type}" role="alert">
+					<span th:text="${message.content}"></span>
+				</div>
+				<form th:action="@{/user/changepass}" method="post">
+					<label for="oldpass">Old Password</label> <input type="password"
+						name="oldpass" id="oldpass" required> <label for="newpass">New
+						Password</label> <input type="password" name="newpass" id="newpass"
+						required>
+
+					<button type="submit">Change Password</button>
+				</form>
+
+
+				<hr>
+
+				<!-- Update Profile Section -->
+				<div class="profileupdate section-card">
+					<h3>👤 Update Profile</h3>
+					<!-- message.html -->
+					<div th:if="${message}" class="alert "
+						th:classappend="'alert-' + ${message.type}" role="alert">
+						<span th:text="${message.content}"></span>
 					</div>
-					<form th:action="@{/user/changepass}" method="post">
-						<label for="oldpass">Old Password</label> <input type="password"
-							name="oldpass" id="oldpass" required> <label
-							for="newpass">New Password</label> <input type="password"
-							name="newpass" id="newpass" required>
-
-						<button type="submit">Change Password</button>
-					</form>
-
-
-					<hr>
-
-					<!-- Update Profile Section -->
-					<div class="profileupdate section-card">
-						<h3>👤 Update Profile</h3>
-						<!-- Alert Message -->
-						<div id="alert-message" th:if="${session.message}" class="alert"
-							th:classappend="${'alert-' + session.message.type}">
-							<p th:text="${session.message.content}"></p>
+					<form th:action="@{/user/update-profile}" method="post"
+						enctype="multipart/form-data">
+						<img
+							th:src="${user.imageUrl != null} ? ${user.imageUrl} : @{/images/default.png}"
+							alt="Profile Picture" class="rounded-circle img-thumbnail"
+							style="width: 150px; height: 150px; object-fit: cover;" /> <label
+							for="name">Name</label> <input type="text" name="name" id="name"
+							th:value="${user.name}" required> <label for="email">Email</label>
+						<input type="email" name="email" id="email"
+							th:value="${user.email}" readonly>
+						<div class="form-group">
+							<label for="profileImage">Change Profile Image</label> <input
+								type="file" name="profileImage" id="profileImage"
+								accept="image/*">
 						</div>
-						<form th:action="@{/user/update-profile}" method="post"
-							enctype="multipart/form-data">
-							<img
-								th:src="${user.imageUrl != null} ? ${user.imageUrl} : @{/images/default.png}"
-								alt="Profile Picture" class="rounded-circle img-thumbnail"
-								style="width: 150px; height: 150px; object-fit: cover;" /> <label
-								for="name">Name</label> <input type="text" name="name" id="name"
-								th:value="${user.name}" required> <label for="email">Email</label>
-							<input type="email" name="email" id="email"
-								th:value="${user.email}" readonly>
-							<div class="form-group">
-								<label for="profileImage">Change Profile Image</label> <input
-									type="file" name="profileImage" id="profileImage"
-									accept="image/*">
-							</div>
 
 
-							<button type="submit">Update Profile</button>
-						</form>
-					</div>
+						<button type="submit">Update Profile</button>
+					</form>
 				</div>
 			</div>
+		</div>
+
 	</section>
 	<script>
   // Auto-hide alert message after 3 seconds
